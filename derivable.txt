@@ -1,0 +1,92 @@
+---
+What is derivable from azure_nonsimple.txt
+---
+
+1. Complete User Journey — Login Flow
+
+This is fully reconstructable, step by step:
+
+User opens portal
+      ↓
+[Pre-login]  GET /preloginBanners        ← banners loaded before login (144 times)
+      ↓
+[Step 1]     loginOtpGenerate            ← user enters mobile/email + DOB
+             verifyRecaptcha             ← captcha checked
+             saveCustomerSessionDetails  ← session created
+             → POST Khushi/login         ← credentials verified against backend
+             → POST Khushi/sendOTP       ← OTP sent to user's mobile
+             updateCustomerAccountLockStatus
+             saveOtpTransactionDetails
+      ↓
+[Step 2]     loginOtpValidate            ← user enters OTP
+             getOtpTransactionDetails
+             → POST Khushi/validateOTP   ← OTP verified
+             → POST Khushi/getClientDetailsByClientId  ← fetch user profile
+             saveCustomerDetails
+             whatsappOptInApi            ← WhatsApp consent checked
+             savePolicyDetails           ← user's policies loaded
+             saveLoginHistoryDetails     ← login recorded
+      ↓
+[Logged In]  sessionToken issued
+      ↓
+[Session]    getCustomerSessionDetailsBySessionId  (565 times)
+             getCustomerDataByCustomerId            (215 times)
+             profileDetails                         (84 times)
+             trackServiceRequest                    (85 times)
+             contactDetailsOtp                      (114 times)
+      ↓
+[Logout]     logout method               ← 10 logout events found
+
+---
+2. User Identities Visible
+
+  Identity type       | Example                        | Count
+  --------------------|--------------------------------|----------------------
+  Username (mobile)   | 9892420650, 9999246750         | 17 login events
+  Username (email)    | ravindra.pal@pelocal.com       | captured
+  customerId          | 132, 162, 3, 24, 7             | 24 distinct users
+  clientId            | 51044465, 51345753, 50884295   | from login responses
+
+---
+3. Errors & Failures — fully visible
+
+  Error                                          | Count | Meaning
+  ------------------------------------------------|-------|-------------------------------
+  errorCode 114 — "you've reached max attempts"  |  30   | Users hitting OTP retry limit
+  errorCode 105 — "Invalid credentials"          |  13   | Wrong password/DOB entered
+  errorCode 110 — "OTP expired / max attempts"   |   3   | OTP timeout
+  JWT Token has expired                           |  58   | Sessions expiring mid-use
+  Aadhaar OTP sending failed                      |   6   | Aadhaar verification broken
+  validateOTP Exception                           |   1   | OTP validation API crashed
+  SMS token 401 Unauthorized                      |   3   | SMS service auth broken
+
+---
+4. External Systems Being Called
+
+  pnbmetlife.com/KhushiRevamp/
+    ├── /login                      34 calls
+    ├── /sendOTP                    10 calls
+    ├── /validateOTP                10 calls
+    └── /getClientDetailsByClientId  8 calls
+
+---
+5. What is NOT derivable
+
+  Missing                      | Why
+  -----------------------------|---------------------------------------------------------------
+  What user did AFTER login    | Only usermgmt service — post-login navigation in other services
+  Full session duration        | SessionId not in logs, only inferred from thread
+  Which policies user viewed   | That would be in a policy or portal service log
+  User's location / device     | ClientIP/Browser empty in this log type
+
+---
+Bottom line
+
+This log file gives you the authentication journey very clearly — who logged in, how,
+whether they succeeded, how many failed attempts, and when they logged out.
+
+What it cannot give you is the post-login product journey (what they browsed, what they
+bought, what they viewed) because that lives in other services' logs.
+
+To get the full picture you'd need to correlate this with logs from the portal/policy/document
+services using the customerId or sessionId as the joining key.
