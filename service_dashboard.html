@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Service Dashboard — WM Sandbox</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #0f1117; color: #d4d4d8;
+    padding: 28px 20px 60px; min-height: 100vh;
+  }
+  header { text-align: center; margin-bottom: 36px; }
+  header h1 { font-size: 1.7rem; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
+  header p { margin-top: 6px; color: #71717a; font-size: 0.88rem; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(700px, 1fr));
+    gap: 22px; max-width: 1600px; margin: 0 auto;
+  }
+  .card {
+    background: #18181b; border: 1px solid #27272a;
+    border-left: 4px solid var(--accent); border-radius: 10px; overflow: hidden;
+  }
+  .card-header {
+    padding: 16px 20px 12px; border-bottom: 1px solid #27272a;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 6px;
+    font-size: 0.8rem; font-weight: 700; color: #fff; flex-shrink: 0;
+  }
+  .card-header h2 {
+    font-size: 0.88rem; font-weight: 600; color: #e4e4e7;
+    flex: 1; min-width: 0; word-break: break-all;
+  }
+  .metrics { display: flex; gap: 18px; margin-left: auto; }
+  .metric { display: flex; flex-direction: column; align-items: flex-end; }
+  .metric .val { font-size: 1.05rem; font-weight: 700; color: #fff; line-height: 1.1; }
+  .metric .lbl { font-size: 0.68rem; color: #71717a; text-transform: uppercase; letter-spacing: 0.04em; }
+  .metric-err .val { color: #f87171; }
+  .card-body { display: flex; padding: 0; }
+  .col-flow { flex: 1.1; padding: 14px 16px; border-right: 1px solid #27272a; min-width: 0; }
+  .col-right { flex: 0.9; padding: 14px 16px; min-width: 0; }
+  .section-title {
+    font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.07em; color: #71717a; margin-bottom: 8px;
+  }
+  .ttable { width: 100%; border-collapse: collapse; font-size: 0.73rem; }
+  .ttable td { padding: 3px 4px; color: #a1a1aa; word-break: break-all; }
+  .ttable td.num { color: var(--accent); font-weight: 600; text-align: right; width: 40px; min-width: 40px; }
+  .ttable td.err { color: #fca5a5; }
+  .ttable tr:hover td { color: #e4e4e7; }
+  .ep-err { color: #f87171; font-size: 0.68rem; }
+  .deps { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .dep-tag {
+    background: #27272a; border-radius: 4px; padding: 2px 8px;
+    font-size: 0.68rem; color: #a1a1aa; word-break: break-all;
+  }
+  .dep-cnt { color: #71717a; margin-left: 3px; }
+  @media (max-width: 780px) {
+    .card-body { flex-direction: column; }
+    .col-flow { border-right: none; border-bottom: 1px solid #27272a; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Service Call Dashboard</h1>
+  <p>wm-sandbox-1 · 18 services · 9,738 requests · 84 errors · 08:00–09:00 UTC · source: logs-insights-results.json</p>
+</header>
+<div class="grid">
+
+<div class="card" style="--accent:#4e79a7">
+  <div class="card-header">
+    <span class="badge" style="background:#4e79a7">0</span>
+    <h2>wmebonboarding</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">3,212</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">0%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">52ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">24ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 286" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,97.0 C257,97.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.28"/>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="4" fill="none" stroke-opacity="0.78"/>
+<path d="M185,249.0 C257,249.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.23"/>
+<path d="M185,135.0 C257,135.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.26"/>
+<path d="M185,173.0 C257,173.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.23"/>
+<path d="M185,211.0 C257,211.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.23"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#4e79a7" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">ebonboarding/api/projects/{id}</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#4e79a7" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">applications/{id}/transactions</text>
+<rect x="158" y="86.0" width="26" height="22" rx="3" fill="#4e79a7" opacity="0.7"/>
+<text x="153" y="101.0" class="nr">ansformer-bucketings/onboarded</text>
+<rect x="158" y="124.0" width="26" height="22" rx="3" fill="#4e79a7" opacity="0.7"/>
+<text x="153" y="139.0" class="nr">/api/pipelines/tool/{id}/ERROR</text>
+<rect x="158" y="162.0" width="26" height="22" rx="3" fill="#4e79a7" opacity="0.7"/>
+<text x="153" y="177.0" class="nr">onboarding/api/connectors/{id}</text>
+<rect x="158" y="200.0" width="26" height="22" rx="3" fill="#4e79a7" opacity="0.7"/>
+<text x="153" y="215.0" class="nr">/transformer-bucketings/unique</text>
+<rect x="158" y="238.0" width="26" height="22" rx="3" fill="#4e79a7" opacity="0.7"/>
+<text x="153" y="253.0" class="nr">ebonboarding/api/event-configs</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>T /services/wmebonboarding/api/projects/{id}</td><td class="num">1208</td></tr><tr><td>nboarding/api/applications/{id}/transactions</td><td class="num">1003</td></tr><tr><td>oarding/api/transformer-bucketings/onboarded</td><td class="num">132</td></tr><tr><td>wmebonboarding/api/pipelines/tool/{id}/ERROR</td><td class="num">102</td></tr><tr><td>/services/wmebonboarding/api/connectors/{id}</td><td class="num">58</td></tr><tr><td>onboarding/api/transformer-bucketings/unique</td><td class="num">57</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">wmerrorbudgetstatisticsservice <span class="dep-cnt">22</span></span> <span class="dep-tag">wmmeta <span class="dep-cnt">13</span></span> <span class="dep-tag">wmerrorbudgetitsmservice <span class="dep-cnt">8</span></span> <span class="dep-tag">wmerrorbudgetalertandnotificationservice <span class="dep-cnt">7</span></span> <span class="dep-tag">wmuitestcontroller <span class="dep-cnt">4</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#f28e2b">
+  <div class="card-header">
+    <span class="badge" style="background:#f28e2b">1</span>
+    <h2>selenium-grid</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">2,238</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">1%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">54ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">216ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 286" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="5" fill="none" stroke-opacity="0.84"/>
+<path d="M185,59.0 C257,59.0 257,59.0 330,59.0" stroke="#e15759" stroke-width="1" fill="none" stroke-opacity="0.22"/>
+<path d="M185,173.0 C257,173.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.46"/>
+<path d="M185,97.0 C257,97.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.50"/>
+<path d="M185,135.0 C257,135.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.48"/>
+<path d="M185,211.0 C257,211.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.42"/>
+<path d="M185,249.0 C257,249.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.35"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">/{session}/element/{elem}/rect</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">session/{session}/execute/sync</text>
+<rect x="158" y="86.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="101.0" class="nr">ssion/{session}/window/handles</text>
+<rect x="158" y="124.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="139.0" class="nr">d/hub/session/{session}/se/log</text>
+<rect x="158" y="162.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="177.0" class="nr">b/session/{session}/screenshot</text>
+<rect x="158" y="200.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="215.0" class="nr">/session/{session}/window/rect</text>
+<rect x="158" y="238.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="253.0" class="nr">wd/hub/session/{session}/frame</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+<rect x="330" y="48.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.8"/>
+<text x="361" y="63.0" class="nl">5xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>wd/hub/session/{session}/element/{elem}/rect</td><td class="num">436</td></tr><tr><td class="err">POST /wd/hub/session/{session}/execute/sync <span class="ep-err">(12 err)</span></td><td class="num">413</td></tr><tr><td>GET /wd/hub/session/{session}/window/handles</td><td class="num">185</td></tr><tr><td>POST /wd/hub/session/{session}/se/log</td><td class="num">173</td></tr><tr><td>GET /wd/hub/session/{session}/screenshot</td><td class="num">160</td></tr><tr><td>GET /wd/hub/session/{session}/window/rect</td><td class="num">138</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span style="color:#52525b">—</span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#e15759">
+  <div class="card-header">
+    <span class="badge" style="background:#e15759">2</span>
+    <h2>wmerrorbudgetstatisticsservice</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">1,071</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">0%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">48ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">71ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 286" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,97.0 C257,97.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.21"/>
+<path d="M185,211.0 C257,211.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.21"/>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.22"/>
+<path d="M185,249.0 C257,249.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.20"/>
+<path d="M185,135.0 C257,135.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.21"/>
+<path d="M185,173.0 C257,173.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.21"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">ransactions/summary/series/all</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">rvice/api/applications/summary</text>
+<rect x="158" y="86.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.7"/>
+<text x="153" y="101.0" class="nr">rvice/api/transactions/summary</text>
+<rect x="158" y="124.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.7"/>
+<text x="153" y="139.0" class="nr">pi/summary-dashboard/slo/count</text>
+<rect x="158" y="162.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.7"/>
+<text x="153" y="177.0" class="nr">pi/release-histories/sensitive</text>
+<rect x="158" y="200.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.7"/>
+<text x="153" y="215.0" class="nr">ary-dashboard/slo/stats/ACTIVE</text>
+<rect x="158" y="238.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.7"/>
+<text x="153" y="253.0" class="nr">ons/summary/series/progressive</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>sservice/api/transactions/summary/series/all</td><td class="num">945</td></tr><tr><td>etstatisticsservice/api/applications/summary</td><td class="num">27</td></tr><tr><td>etstatisticsservice/api/transactions/summary</td><td class="num">14</td></tr><tr><td>sticsservice/api/summary-dashboard/slo/count</td><td class="num">14</td></tr><tr><td>sticsservice/api/release-histories/sensitive</td><td class="num">14</td></tr><tr><td>rvice/api/summary-dashboard/slo/stats/ACTIVE</td><td class="num">10</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">wmebonboarding <span class="dep-cnt">22</span></span> <span class="dep-tag">wmerrorbudgetitsmservice <span class="dep-cnt">3</span></span> <span class="dep-tag">wmuitestcontroller <span class="dep-cnt">3</span></span> <span class="dep-tag">wmerrorbudgetalertandnotificationservice <span class="dep-cnt">3</span></span> <span class="dep-tag">wmmeta <span class="dep-cnt">3</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#76b7b2">
+  <div class="card-header">
+    <span class="badge" style="background:#76b7b2">3</span>
+    <h2>sts-auth</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">1,037</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">0%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">3ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">4ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#76b7b2" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">GET /api/sts/grant-token</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>GET /api/sts/grant-token</td><td class="num">1037</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span style="color:#52525b">—</span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#59a14f">
+  <div class="card-header">
+    <span class="badge" style="background:#59a14f">4</span>
+    <h2>gateway</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">765</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">0%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">6ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">31ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 286" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="3" fill="none" stroke-opacity="0.66"/>
+<path d="M185,211.0 C257,211.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.42"/>
+<path d="M185,249.0 C257,249.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.42"/>
+<path d="M185,135.0 C257,135.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.44"/>
+<path d="M185,97.0 C257,97.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.53"/>
+<path d="M185,173.0 C257,173.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.44"/>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">POST /</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">c-4ee7-a8fa-b9819f6c3d6c/roles</text>
+<rect x="158" y="86.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.7"/>
+<text x="153" y="101.0" class="nr">Regular.674fc4748ed43d04.woff2</text>
+<rect x="158" y="124.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.7"/>
+<text x="153" y="139.0" class="nr">T /styles.c9fdbd6937ac995c.css</text>
+<rect x="158" y="162.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.7"/>
+<text x="153" y="177.0" class="nr">GET /manifest.webapp</text>
+<rect x="158" y="200.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.7"/>
+<text x="153" y="215.0" class="nr">GET /api/gateway/version</text>
+<rect x="158" y="238.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.7"/>
+<text x="153" y="253.0" class="nr">pi/gateway/disabled-menu-items</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+<rect x="330" y="48.0" width="26" height="22" rx="3" fill="#76b7b2" opacity="0.8"/>
+<text x="361" y="63.0" class="nl">3xx</text>
+<rect x="330" y="86.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.8"/>
+<text x="361" y="101.0" class="nl">4xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>POST /</td><td class="num">32</td></tr><tr><td>{id}a040f2-907c-4ee7-a8fa-b9819f6c3d6c/roles</td><td class="num">21</td></tr><tr><td>GET /Lato-Regular.674fc4748ed43d04.woff2</td><td class="num">15</td></tr><tr><td>GET /styles.c9fdbd6937ac995c.css</td><td class="num">11</td></tr><tr><td>GET /manifest.webapp</td><td class="num">11</td></tr><tr><td>GET /api/gateway/version</td><td class="num">10</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">wmmeta <span class="dep-cnt">6</span></span> <span class="dep-tag">s3-storage <span class="dep-cnt">6</span></span> <span class="dep-tag">wmuitestcontroller <span class="dep-cnt">5</span></span> <span class="dep-tag">wm-ai-lapi-engine <span class="dep-cnt">5</span></span> <span class="dep-tag">keycloak <span class="dep-cnt">5</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#edc948">
+  <div class="card-header">
+    <span class="badge" style="background:#edc948">5</span>
+    <h2>wmmeta</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">417</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">0%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">37ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">160ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 286" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,211.0 C257,211.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.33"/>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,97.0 C257,97.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="3" fill="none" stroke-opacity="0.57"/>
+<path d="M185,249.0 C257,249.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.32"/>
+<path d="M185,135.0 C257,135.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.38"/>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="3" fill="none" stroke-opacity="0.66"/>
+<path d="M185,97.0 C257,97.0 257,97.0 330,97.0" stroke="#e15759" stroke-width="1" fill="none" stroke-opacity="0.21"/>
+<path d="M185,173.0 C257,173.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.38"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">api/menu-entitlements/evaluate</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">ta/api/app-tool-instances/{id}</text>
+<rect x="158" y="86.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.7"/>
+<text x="153" y="101.0" class="nr">rvices/wmmeta/api/applications</text>
+<rect x="158" y="124.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.7"/>
+<text x="153" y="139.0" class="nr">meta/api/licensed-applications</text>
+<rect x="158" y="162.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.7"/>
+<text x="153" y="177.0" class="nr">a/api/applications/unique-name</text>
+<rect x="158" y="200.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.7"/>
+<text x="153" y="215.0" class="nr">vices/wmmeta/api/project-metas</text>
+<rect x="158" y="238.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.7"/>
+<text x="153" y="253.0" class="nr">es/wmmeta/api/app-global-tools</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+<rect x="330" y="48.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.8"/>
+<text x="361" y="63.0" class="nl">4xx</text>
+<rect x="330" y="86.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.8"/>
+<text x="361" y="101.0" class="nl">5xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>rvices/wmmeta/api/menu-entitlements/evaluate</td><td class="num">92</td></tr><tr><td>/services/wmmeta/api/app-tool-instances/{id}</td><td class="num">61</td></tr><tr><td>GET /services/wmmeta/api/applications</td><td class="num">48</td></tr><tr><td>T /services/wmmeta/api/licensed-applications</td><td class="num">23</td></tr><tr><td>services/wmmeta/api/applications/unique-name</td><td class="num">23</td></tr><tr><td>GET /services/wmmeta/api/project-metas</td><td class="num">17</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">wmebonboarding <span class="dep-cnt">13</span></span> <span class="dep-tag">wmerrorbudgetalertandnotificationservice <span class="dep-cnt">7</span></span> <span class="dep-tag">gateway <span class="dep-cnt">6</span></span> <span class="dep-tag">wmuitestcontroller <span class="dep-cnt">5</span></span> <span class="dep-tag">wmtestopsctrl <span class="dep-cnt">4</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#b07aa1">
+  <div class="card-header">
+    <span class="badge" style="background:#b07aa1">6</span>
+    <h2>keycloak</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">275</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">0%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">11ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">41ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 286" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="3" fill="none" stroke-opacity="0.55"/>
+<path d="M185,211.0 C257,211.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.25"/>
+<path d="M185,97.0 C257,97.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="3" fill="none" stroke-opacity="0.55"/>
+<path d="M185,135.0 C257,135.0 257,97.0 330,97.0" stroke="#edc948" stroke-width="1" fill="none" stroke-opacity="0.38"/>
+<path d="M185,135.0 C257,135.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.32"/>
+<path d="M185,173.0 C257,173.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.30"/>
+<path d="M185,249.0 C257,249.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.25"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#b07aa1" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">/protocol/openid-connect/certs</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#b07aa1" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">/role-mappings/realm/composite</text>
+<rect x="158" y="86.0" width="26" height="22" rx="3" fill="#b07aa1" opacity="0.7"/>
+<text x="153" y="101.0" class="nr">/protocol/openid-connect/token</text>
+<rect x="158" y="124.0" width="26" height="22" rx="3" fill="#b07aa1" opacity="0.7"/>
+<text x="153" y="139.0" class="nr">/admin/realms/watermelon/roles</text>
+<rect x="158" y="162.0" width="26" height="22" rx="3" fill="#b07aa1" opacity="0.7"/>
+<text x="153" y="177.0" class="nr">f2-907c-4ee7-a8fa-b9819f6c3d6c</text>
+<rect x="158" y="200.0" width="26" height="22" rx="3" fill="#b07aa1" opacity="0.7"/>
+<text x="153" y="215.0" class="nr">GET /admin/realms/watermelon</text>
+<rect x="158" y="238.0" width="26" height="22" rx="3" fill="#b07aa1" opacity="0.7"/>
+<text x="153" y="253.0" class="nr">c3-98ba-405a-9b71-77e685a85699</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+<rect x="330" y="48.0" width="26" height="22" rx="3" fill="#76b7b2" opacity="0.8"/>
+<text x="361" y="63.0" class="nl">3xx</text>
+<rect x="330" y="86.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.8"/>
+<text x="361" y="101.0" class="nl">4xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>lms/watermelon/protocol/openid-connect/certs</td><td class="num">72</td></tr><tr><td>lms/watermelon/protocol/openid-connect/token</td><td class="num">36</td></tr><tr><td>POST /admin/realms/watermelon/roles</td><td class="num">27</td></tr><tr><td>a-b9819f6c3d6c/role-mappings/realm/composite</td><td class="num">23</td></tr><tr><td>1-77e685a85699/role-mappings/realm/composite</td><td class="num">9</td></tr><tr><td>users/{id}a040f2-907c-4ee7-a8fa-b9819f6c3d6c</td><td class="num">6</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">wm-ai-lapi-engine <span class="dep-cnt">5</span></span> <span class="dep-tag">gateway <span class="dep-cnt">5</span></span> <span class="dep-tag">wmmeta <span class="dep-cnt">3</span></span> <span class="dep-tag">wmuitestcontroller <span class="dep-cnt">2</span></span> <span class="dep-tag">wmebonboarding <span class="dep-cnt">2</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#ff9da7">
+  <div class="card-header">
+    <span class="badge" style="background:#ff9da7">7</span>
+    <h2>s3-storage</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">209</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">0%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">10ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">16ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 286" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,97.0 C257,97.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.21"/>
+<path d="M185,135.0 C257,135.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.21"/>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,173.0 C257,173.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.21"/>
+<path d="M185,211.0 C257,211.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.21"/>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="3" fill="none" stroke-opacity="0.63"/>
+<path d="M185,249.0 C257,249.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.21"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#ff9da7" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">reenshots/{id}/{id}/object.png</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#ff9da7" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">eenshots/{id}/{id}/object.html</text>
+<rect x="158" y="86.0" width="26" height="22" rx="3" fill="#ff9da7" opacity="0.7"/>
+<text x="153" y="101.0" class="nr">e27f09e4/{id}.344012_Click.png</text>
+<rect x="158" y="124.0" width="26" height="22" rx="3" fill="#ff9da7" opacity="0.7"/>
+<text x="153" y="139.0" class="nr">27f09e4/{id}.0519612_Click.png</text>
+<rect x="158" y="162.0" width="26" height="22" rx="3" fill="#ff9da7" opacity="0.7"/>
+<text x="153" y="177.0" class="nr">27f09e4/{id}.7186913_Click.png</text>
+<rect x="158" y="200.0" width="26" height="22" rx="3" fill="#ff9da7" opacity="0.7"/>
+<text x="153" y="215.0" class="nr">27f09e4/{id}.1443238_Click.png</text>
+<rect x="158" y="238.0" width="26" height="22" rx="3" fill="#ff9da7" opacity="0.7"/>
+<text x="153" y="253.0" class="nr">e27f09e4/{id}.387219_Click.png</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>/wm-ui-test-screenshots/{id}/{id}/object.png</td><td class="num">79</td></tr><tr><td>wm-ui-test-screenshots/{id}/{id}/object.html</td><td class="num">49</td></tr><tr><td>4324-8be0-75d1e27f09e4/{id}.344012_Click.png</td><td class="num">1</td></tr><tr><td>324-8be0-75d1e27f09e4/{id}.0519612_Click.png</td><td class="num">1</td></tr><tr><td>324-8be0-75d1e27f09e4/{id}.7186913_Click.png</td><td class="num">1</td></tr><tr><td>324-8be0-75d1e27f09e4/{id}.1443238_Click.png</td><td class="num">1</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">gateway <span class="dep-cnt">6</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#4e79a7">
+  <div class="card-header">
+    <span class="badge" style="background:#4e79a7">8</span>
+    <h2>wmeberrordashboardservice</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">198</span><span class="lbl">calls</span></div>
+      <div class="metric metric-err">
+        <span class="val">22%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">149ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">606ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="3" fill="none" stroke-opacity="0.59"/>
+<path d="M185,59.0 C257,59.0 257,59.0 330,59.0" stroke="#e15759" stroke-width="2" fill="none" stroke-opacity="0.51"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#4e79a7" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">GET /api/sts/grant-token</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#4e79a7" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">pi/job/error-dashboard/trigger</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+<rect x="330" y="48.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.8"/>
+<text x="361" y="63.0" class="nl">5xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>GET /api/sts/grant-token</td><td class="num">99</td></tr><tr><td class="err">boardservice/api/job/error-dashboard/trigger <span class="ep-err">(44 err)</span></td><td class="num">99</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">wmerrorbudgetalertandnotificationservice <span class="dep-cnt">49</span></span> <span class="dep-tag">wmerrorbudgetitsmservice <span class="dep-cnt">6</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#f28e2b">
+  <div class="card-header">
+    <span class="badge" style="background:#f28e2b">9</span>
+    <h2>wmerrorbudgetalertandnotificationservice</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">110</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">0%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">58ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">200ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 248" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,97.0 C257,97.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.54"/>
+<path d="M185,173.0 C257,173.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.27"/>
+<path d="M185,135.0 C257,135.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.29"/>
+<path d="M185,211.0 C257,211.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.27"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">ationservice/api/alert/trigger</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">GET /api/sts/grant-token</text>
+<rect x="158" y="86.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="101.0" class="nr">ervice/api/alerts-action/count</text>
+<rect x="158" y="124.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="139.0" class="nr">-action/chronology/APPLICATION</text>
+<rect x="158" y="162.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="177.0" class="nr">nservice/api/dev-actions/count</text>
+<rect x="158" y="200.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="215.0" class="nr">ationservice/api/actions/count</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>lertandnotificationservice/api/alert/trigger</td><td class="num">39</td></tr><tr><td>GET /api/sts/grant-token</td><td class="num">39</td></tr><tr><td>dnotificationservice/api/alerts-action/count</td><td class="num">19</td></tr><tr><td>ice/api/alerts-action/chronology/APPLICATION</td><td class="num">5</td></tr><tr><td>andnotificationservice/api/dev-actions/count</td><td class="num">4</td></tr><tr><td>lertandnotificationservice/api/actions/count</td><td class="num">4</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">wmeberrordashboardservice <span class="dep-cnt">49</span></span> <span class="dep-tag">wmerrorbudgetitsmservice <span class="dep-cnt">8</span></span> <span class="dep-tag">wmmeta <span class="dep-cnt">7</span></span> <span class="dep-tag">wmebonboarding <span class="dep-cnt">7</span></span> <span class="dep-tag">wmuitestcontroller <span class="dep-cnt">3</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#e15759">
+  <div class="card-header">
+    <span class="badge" style="background:#e15759">10</span>
+    <h2>wmchaoscontroller</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">96</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">4%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">141ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">580ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 286" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="5" fill="none" stroke-opacity="0.86"/>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,173.0 C257,173.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.38"/>
+<path d="M185,97.0 C257,97.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.46"/>
+<path d="M185,135.0 C257,135.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.46"/>
+<path d="M185,211.0 C257,211.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.38"/>
+<path d="M185,249.0 C257,249.0 257,97.0 330,97.0" stroke="#e15759" stroke-width="1" fill="none" stroke-opacity="0.38"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">/chaos/execution/latest/status</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">}F362485734AF09E21B4BD5FA288A2</text>
+<rect x="158" y="86.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.7"/>
+<text x="153" y="101.0" class="nr">os/execution/steadyStateStatus</text>
+<rect x="158" y="124.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.7"/>
+<text x="153" y="139.0" class="nr">oscontroller/api/v1/chaos/repo</text>
+<rect x="158" y="162.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.7"/>
+<text x="153" y="177.0" class="nr">ces/getCloudResources/platform</text>
+<rect x="158" y="200.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.7"/>
+<text x="153" y="215.0" class="nr">/VM/situations/disableMultiple</text>
+<rect x="158" y="238.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.7"/>
+<text x="153" y="253.0" class="nr">api/v1/azure/check_credentials</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+<rect x="330" y="48.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.8"/>
+<text x="361" y="63.0" class="nl">4xx</text>
+<rect x="330" y="86.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.8"/>
+<text x="361" y="101.0" class="nl">5xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>troller/api/v1/chaos/execution/latest/status</td><td class="num">16</td></tr><tr><td>on/summary/{id}F362485734AF09E21B4BD5FA288A2</td><td class="num">15</td></tr><tr><td>ler/api/v1/chaos/execution/steadyStateStatus</td><td class="num">6</td></tr><tr><td>es/wmchaoscontroller/api/v1/chaos/repo/count</td><td class="num">5</td></tr><tr><td>1/cloud/resources/getCloudResources/platform</td><td class="num">4</td></tr><tr><td>services/wmchaoscontroller/api/v1/chaos/repo</td><td class="num">4</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">wmuitestcontroller <span class="dep-cnt">2</span></span> <span class="dep-tag">gateway <span class="dep-cnt">2</span></span> <span class="dep-tag">wmmeta <span class="dep-cnt">2</span></span> <span class="dep-tag">wmtestopsctrl <span class="dep-cnt">2</span></span> <span class="dep-tag">keycloak <span class="dep-cnt">1</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#76b7b2">
+  <div class="card-header">
+    <span class="badge" style="background:#76b7b2">11</span>
+    <h2>wmuitestcontroller</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">44</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">0%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">35ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">149ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 286" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,211.0 C257,211.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.43"/>
+<path d="M185,249.0 C257,249.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.43"/>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="5" fill="none" stroke-opacity="0.78"/>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,97.0 C257,97.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="5" fill="none" stroke-opacity="0.78"/>
+<path d="M185,135.0 C257,135.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="3" fill="none" stroke-opacity="0.55"/>
+<path d="M185,173.0 C257,173.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="3" fill="none" stroke-opacity="0.55"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#76b7b2" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">s/wmuitestcontroller/api/grids</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#76b7b2" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">29-a6ea-4333-9bf1-29d69ba9cb3e</text>
+<rect x="158" y="86.0" width="26" height="22" rx="3" fill="#76b7b2" opacity="0.7"/>
+<text x="153" y="101.0" class="nr">estcontroller/api/device-farms</text>
+<rect x="158" y="124.0" width="26" height="22" rx="3" fill="#76b7b2" opacity="0.7"/>
+<text x="153" y="139.0" class="nr">troller/api/execute/test-packs</text>
+<rect x="158" y="162.0" width="26" height="22" rx="3" fill="#76b7b2" opacity="0.7"/>
+<text x="153" y="177.0" class="nr">5d-c609-4afc-85e4-218fa5b5b6a7</text>
+<rect x="158" y="200.0" width="26" height="22" rx="3" fill="#76b7b2" opacity="0.7"/>
+<text x="153" y="215.0" class="nr">d0-474b-480a-b3d6-3acc9e06c002</text>
+<rect x="158" y="238.0" width="26" height="22" rx="3" fill="#76b7b2" opacity="0.7"/>
+<text x="153" y="253.0" class="nr">a1-6e47-4949-a7df-2162b7a4406b</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>GET /services/wmuitestcontroller/api/grids</td><td class="num">6</td></tr><tr><td>uuid/{id}e7c3c29-a6ea-4333-9bf1-29d69ba9cb3e</td><td class="num">5</td></tr><tr><td>services/wmuitestcontroller/api/device-farms</td><td class="num">5</td></tr><tr><td>es/wmuitestcontroller/api/execute/test-packs</td><td class="num">3</td></tr><tr><td>ns/uuid/{id}a05d-c609-4afc-85e4-218fa5b5b6a7</td><td class="num">3</td></tr><tr><td>ns/uuid/fd62ced0-474b-480a-b3d6-3acc9e06c002</td><td class="num">2</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">wmmeta <span class="dep-cnt">5</span></span> <span class="dep-tag">gateway <span class="dep-cnt">5</span></span> <span class="dep-tag">wmebonboarding <span class="dep-cnt">4</span></span> <span class="dep-tag">wmtestopsctrl <span class="dep-cnt">4</span></span> <span class="dep-tag">wmerrorbudgetitsmservice <span class="dep-cnt">3</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#59a14f">
+  <div class="card-header">
+    <span class="badge" style="background:#59a14f">12</span>
+    <h2>wmerrorbudgetitsmservice</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">29</span><span class="lbl">calls</span></div>
+      <div class="metric metric-err">
+        <span class="val">45%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">42ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">88ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 172" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,97.0 C257,97.0 257,97.0 330,97.0" stroke="#e15759" stroke-width="1" fill="none" stroke-opacity="0.41"/>
+<path d="M185,135.0 C257,135.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="1" fill="none" stroke-opacity="0.41"/>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="3" fill="none" stroke-opacity="0.55"/>
+<path d="M185,21.0 C257,21.0 257,59.0 330,59.0" stroke="#edc948" stroke-width="2" fill="none" stroke-opacity="0.48"/>
+<path d="M185,21.0 C257,21.0 257,97.0 330,97.0" stroke="#e15759" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.48"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">ce/api/itsm/getIncidentDetails</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">ice/api/gate-policy/chronology</text>
+<rect x="158" y="86.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.7"/>
+<text x="153" y="101.0" class="nr">smservice/api/itsm/scheduleJob</text>
+<rect x="158" y="124.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.7"/>
+<text x="153" y="139.0" class="nr">GET /api/sts/grant-token</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+<rect x="330" y="48.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.8"/>
+<text x="361" y="63.0" class="nl">4xx</text>
+<rect x="330" y="86.0" width="26" height="22" rx="3" fill="#e15759" opacity="0.8"/>
+<text x="361" y="101.0" class="nl">5xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td class="err">udgetitsmservice/api/itsm/getIncidentDetails <span class="ep-err">(10 err)</span></td><td class="num">18</td></tr><tr><td>budgetitsmservice/api/gate-policy/chronology</td><td class="num">5</td></tr><tr><td class="err">merrorbudgetitsmservice/api/itsm/scheduleJob <span class="ep-err">(3 err)</span></td><td class="num">3</td></tr><tr><td>GET /api/sts/grant-token</td><td class="num">3</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">wmerrorbudgetalertandnotificationservice <span class="dep-cnt">8</span></span> <span class="dep-tag">wmebonboarding <span class="dep-cnt">8</span></span> <span class="dep-tag">wmeberrordashboardservice <span class="dep-cnt">6</span></span> <span class="dep-tag">wmuitestcontroller <span class="dep-cnt">3</span></span> <span class="dep-tag">wmerrorbudgetstatisticsservice <span class="dep-cnt">3</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#edc948">
+  <div class="card-header">
+    <span class="badge" style="background:#edc948">13</span>
+    <h2>wmtestopsctrl</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">14</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">0%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">14ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">28ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 286" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,135.0 C257,135.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.43"/>
+<path d="M185,173.0 C257,173.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.43"/>
+<path d="M185,211.0 C257,211.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.43"/>
+<path d="M185,249.0 C257,249.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="2" fill="none" stroke-opacity="0.43"/>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,97.0 C257,97.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="4" fill="none" stroke-opacity="0.67"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">mtestopsctrl/api/projects/uuid</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">estopsctrl/api/api-collections</text>
+<rect x="158" y="86.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.7"/>
+<text x="153" y="101.0" class="nr">wmtestopsctrl/api/environments</text>
+<rect x="158" y="124.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.7"/>
+<text x="153" y="139.0" class="nr">psctrl/api/business-units/uuid</text>
+<rect x="158" y="162.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.7"/>
+<text x="153" y="177.0" class="nr">topsctrl/api/applications/{id}</text>
+<rect x="158" y="200.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.7"/>
+<text x="153" y="215.0" class="nr">topsctrl/api/applications/uuid</text>
+<rect x="158" y="238.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.7"/>
+<text x="153" y="253.0" class="nr">wmtestopsctrl/api/applications</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>ET /services/wmtestopsctrl/api/projects/uuid</td><td class="num">3</td></tr><tr><td> /services/wmtestopsctrl/api/api-collections</td><td class="num">3</td></tr><tr><td>GET /services/wmtestopsctrl/api/environments</td><td class="num">2</td></tr><tr><td>rvices/wmtestopsctrl/api/business-units/uuid</td><td class="num">1</td></tr><tr><td>services/wmtestopsctrl/api/applications/{id}</td><td class="num">1</td></tr><tr><td>services/wmtestopsctrl/api/applications/uuid</td><td class="num">1</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">wmuitestcontroller <span class="dep-cnt">4</span></span> <span class="dep-tag">wmmeta <span class="dep-cnt">4</span></span> <span class="dep-tag">gateway <span class="dep-cnt">4</span></span> <span class="dep-tag">wmebonboarding <span class="dep-cnt">3</span></span> <span class="dep-tag">wmerrorbudgetitsmservice <span class="dep-cnt">2</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#b07aa1">
+  <div class="card-header">
+    <span class="badge" style="background:#b07aa1">14</span>
+    <h2>wm-ai-lapi-engine</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">10</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">0%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">2ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">4ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#edc948" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#b07aa1" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">s/wm-ai-lapi-engine/specs/list</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">4xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>GET /services/wm-ai-lapi-engine/specs/list</td><td class="num">10</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">keycloak <span class="dep-cnt">5</span></span> <span class="dep-tag">gateway <span class="dep-cnt">5</span></span> <span class="dep-tag">wmmeta <span class="dep-cnt">3</span></span> <span class="dep-tag">wmuitestcontroller <span class="dep-cnt">2</span></span> <span class="dep-tag">wmebonboarding <span class="dep-cnt">2</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#ff9da7">
+  <div class="card-header">
+    <span class="badge" style="background:#ff9da7">15</span>
+    <h2>svcontroller</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">5</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">0%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">87ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">270ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 134" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,97.0 C257,97.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="3" fill="none" stroke-opacity="0.55"/>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#ff9da7" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">vcontroller/api/business-units</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#ff9da7" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">/svcontroller/api/applications</text>
+<rect x="158" y="86.0" width="26" height="22" rx="3" fill="#ff9da7" opacity="0.7"/>
+<text x="153" y="101.0" class="nr">ntroller/api/applications/{id}</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>/services/svcontroller/api/applications/{id}</td><td class="num">1</td></tr><tr><td>ET /services/svcontroller/api/business-units</td><td class="num">1</td></tr><tr><td>POST /services/svcontroller/api/applications</td><td class="num">1</td></tr><tr><td>GET /services/svcontroller/api/applications</td><td class="num">1</td></tr><tr><td>ST /services/svcontroller/api/business-units</td><td class="num">1</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">wmerrorbudgetitsmservice <span class="dep-cnt">1</span></span> <span class="dep-tag">wmuitestcontroller <span class="dep-cnt">1</span></span> <span class="dep-tag">keycloak <span class="dep-cnt">1</span></span> <span class="dep-tag">wmebonboarding <span class="dep-cnt">1</span></span> <span class="dep-tag">wmerrorbudgetstatisticsservice <span class="dep-cnt">1</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#4e79a7">
+  <div class="card-header">
+    <span class="badge" style="background:#4e79a7">16</span>
+    <h2>wmebexecuter</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">4</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">0%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">1018ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">1901ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="3" fill="none" stroke-opacity="0.55"/>
+<path d="M185,21.0 C257,21.0 257,59.0 330,59.0" stroke="#edc948" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="3" fill="none" stroke-opacity="0.55"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#4e79a7" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">/wmebexecuter/api/runners/test</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#4e79a7" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">bexecuter/api/runners/schedule</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+<rect x="330" y="48.0" width="26" height="22" rx="3" fill="#edc948" opacity="0.8"/>
+<text x="361" y="63.0" class="nl">4xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>POST /services/wmebexecuter/api/runners/test</td><td class="num">3</td></tr><tr><td> /services/wmebexecuter/api/runners/schedule</td><td class="num">1</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span class="dep-tag">wmerrorbudgetstatisticsservice <span class="dep-cnt">1</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="card" style="--accent:#f28e2b">
+  <div class="card-header">
+    <span class="badge" style="background:#f28e2b">17</span>
+    <h2>wmtestdatafactory</h2>
+    <div class="metrics">
+      <div class="metric"><span class="val">4</span><span class="lbl">calls</span></div>
+      <div class="metric ">
+        <span class="val">0%</span><span class="lbl">errors</span>
+      </div>
+      <div class="metric"><span class="val">28ms</span><span class="lbl">avg</span></div>
+      <div class="metric"><span class="val">49ms</span><span class="lbl">p95</span></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="col-flow">
+      <div class="section-title">Endpoint → Status</div>
+      <svg viewBox="0 0 520 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:340px">
+<style>.nl{font:9px monospace;fill:#ccc}.nr{font:9px monospace;fill:#ccc;text-anchor:end}</style>
+<path d="M185,21.0 C257,21.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<path d="M185,59.0 C257,59.0 257,21.0 330,21.0" stroke="#59a14f" stroke-width="6" fill="none" stroke-opacity="0.90"/>
+<rect x="158" y="10.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="25.0" class="nr">factory/api/data-set-rows/{id}</text>
+<rect x="158" y="48.0" width="26" height="22" rx="3" fill="#f28e2b" opacity="0.7"/>
+<text x="153" y="63.0" class="nr">visions/{id}/data-set-rows/ids</text>
+<rect x="330" y="10.0" width="26" height="22" rx="3" fill="#59a14f" opacity="0.8"/>
+<text x="361" y="25.0" class="nl">2xx</text>
+</svg>
+    </div>
+    <div class="col-right">
+      <div class="section-title">Top endpoints</div>
+      <table class="ttable"><tbody><tr><td>ces/wmtestdatafactory/api/data-set-rows/{id}</td><td class="num">2</td></tr><tr><td>a-sets/{id}/revisions/{id}/data-set-rows/ids</td><td class="num">2</td></tr></tbody></table>
+      <div class="section-title" style="margin-top:14px">TID co-dependencies</div>
+      <div class="deps"><span style="color:#52525b">—</span></div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

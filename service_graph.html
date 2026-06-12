@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #1a1a2e;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#4e79a7", "font": {"color": "white"}, "id": "gateway", "label": "gateway", "shape": "dot", "size": 56, "title": "\u003cb\u003egateway\u003c/b\u003e\u003cbr\u003eCalls: 765\u003cbr\u003eErrors: 0 (0.0%)\u003cbr\u003eAvg: 6.3 ms | P95: 31.1 ms | Max: 158.0 ms"}, {"color": "#f28e2b", "font": {"color": "white"}, "id": "keycloak", "label": "keycloak", "shape": "dot", "size": 32.33333333333333, "title": "\u003cb\u003ekeycloak\u003c/b\u003e\u003cbr\u003eCalls: 275\u003cbr\u003eErrors: 0 (0.0%)\u003cbr\u003eAvg: 10.8 ms | P95: 40.9 ms | Max: 96.0 ms"}, {"color": "#e15759", "font": {"color": "white"}, "id": "s3-storage", "label": "s3-storage", "shape": "dot", "size": 27.933333333333334, "title": "\u003cb\u003es3-storage\u003c/b\u003e\u003cbr\u003eCalls: 209\u003cbr\u003eErrors: 0 (0.0%)\u003cbr\u003eAvg: 10.2 ms | P95: 15.6 ms | Max: 21.0 ms"}, {"color": "#76b7b2", "font": {"color": "white"}, "id": "selenium-grid", "label": "selenium-grid", "shape": "dot", "size": 56, "title": "\u003cb\u003eselenium-grid\u003c/b\u003e\u003cbr\u003eCalls: 2238\u003cbr\u003eErrors: 22 (1.0%)\u003cbr\u003eAvg: 53.8 ms | P95: 216.5 ms | Max: 3932.0 ms"}, {"color": "#59a14f", "font": {"color": "white"}, "id": "sts-auth", "label": "sts-auth", "shape": "dot", "size": 56, "title": "\u003cb\u003ests-auth\u003c/b\u003e\u003cbr\u003eCalls: 1037\u003cbr\u003eErrors: 0 (0.0%)\u003cbr\u003eAvg: 2.8 ms | P95: 4.0 ms | Max: 96.0 ms"}, {"color": "#edc948", "font": {"color": "white"}, "id": "svcontroller", "label": "svcontroller", "shape": "dot", "size": 14.333333333333334, "title": "\u003cb\u003esvcontroller\u003c/b\u003e\u003cbr\u003eCalls: 5\u003cbr\u003eErrors: 0 (0.0%)\u003cbr\u003eAvg: 87.4 ms | P95: 269.6 ms | Max: 322.0 ms"}, {"color": "#b07aa1", "font": {"color": "white"}, "id": "wm-ai-lapi-engine", "label": "wm-ai-lapi-engine", "shape": "dot", "size": 14.666666666666666, "title": "\u003cb\u003ewm-ai-lapi-engine\u003c/b\u003e\u003cbr\u003eCalls: 10\u003cbr\u003eErrors: 0 (0.0%)\u003cbr\u003eAvg: 2.3 ms | P95: 3.5 ms | Max: 4.0 ms"}, {"color": "#ff9da7", "font": {"color": "white"}, "id": "wmchaoscontroller", "label": "wmchaoscontroller", "shape": "dot", "size": 20.4, "title": "\u003cb\u003ewmchaoscontroller\u003c/b\u003e\u003cbr\u003eCalls: 96\u003cbr\u003eErrors: 4 (4.2%)\u003cbr\u003eAvg: 141.4 ms | P95: 579.5 ms | Max: 2661.0 ms"}, {"color": "#e15759", "font": {"color": "white"}, "id": "wmeberrordashboardservice", "label": "wmeberrordashboardserv\u2026", "shape": "dot", "size": 27.2, "title": "\u003cb\u003ewmeberrordashboardservice\u003c/b\u003e\u003cbr\u003eCalls: 198\u003cbr\u003eErrors: 44 (22.2%)\u003cbr\u003eAvg: 148.5 ms | P95: 606.0 ms | Max: 1120.0 ms"}, {"color": "#f28e2b", "font": {"color": "white"}, "id": "wmebexecuter", "label": "wmebexecuter", "shape": "dot", "size": 14.266666666666667, "title": "\u003cb\u003ewmebexecuter\u003c/b\u003e\u003cbr\u003eCalls: 4\u003cbr\u003eErrors: 0 (0.0%)\u003cbr\u003eAvg: 1018.5 ms | P95: 1900.9 ms | Max: 1999.0 ms"}, {"color": "#e15759", "font": {"color": "white"}, "id": "wmebonboarding", "label": "wmebonboarding", "shape": "dot", "size": 56, "title": "\u003cb\u003ewmebonboarding\u003c/b\u003e\u003cbr\u003eCalls: 3212\u003cbr\u003eErrors: 0 (0.0%)\u003cbr\u003eAvg: 52.0 ms | P95: 24.0 ms | Max: 60086.0 ms"}, {"color": "#76b7b2", "font": {"color": "white"}, "id": "wmerrorbudgetalertandnotificationservice", "label": "wmerrorbudgetalertandn\u2026", "shape": "dot", "size": 21.333333333333332, "title": "\u003cb\u003ewmerrorbudgetalertandnotificationservice\u003c/b\u003e\u003cbr\u003eCalls: 110\u003cbr\u003eErrors: 0 (0.0%)\u003cbr\u003eAvg: 57.5 ms | P95: 199.6 ms | Max: 352.0 ms"}, {"color": "#e15759", "font": {"color": "white"}, "id": "wmerrorbudgetitsmservice", "label": "wmerrorbudgetitsmservi\u2026", "shape": "dot", "size": 15.933333333333334, "title": "\u003cb\u003ewmerrorbudgetitsmservice\u003c/b\u003e\u003cbr\u003eCalls: 29\u003cbr\u003eErrors: 13 (44.8%)\u003cbr\u003eAvg: 42.3 ms | P95: 87.6 ms | Max: 93.0 ms"}, {"color": "#edc948", "font": {"color": "white"}, "id": "wmerrorbudgetstatisticsservice", "label": "wmerrorbudgetstatistic\u2026", "shape": "dot", "size": 56, "title": "\u003cb\u003ewmerrorbudgetstatisticsservice\u003c/b\u003e\u003cbr\u003eCalls: 1071\u003cbr\u003eErrors: 0 (0.0%)\u003cbr\u003eAvg: 48.2 ms | P95: 71.0 ms | Max: 909.0 ms"}, {"color": "#b07aa1", "font": {"color": "white"}, "id": "wmmeta", "label": "wmmeta", "shape": "dot", "size": 41.8, "title": "\u003cb\u003ewmmeta\u003c/b\u003e\u003cbr\u003eCalls: 417\u003cbr\u003eErrors: 1 (0.2%)\u003cbr\u003eAvg: 36.6 ms | P95: 160.2 ms | Max: 496.0 ms"}, {"color": "#ff9da7", "font": {"color": "white"}, "id": "wmtestdatafactory", "label": "wmtestdatafactory", "shape": "dot", "size": 14.266666666666667, "title": "\u003cb\u003ewmtestdatafactory\u003c/b\u003e\u003cbr\u003eCalls: 4\u003cbr\u003eErrors: 0 (0.0%)\u003cbr\u003eAvg: 27.5 ms | P95: 48.7 ms | Max: 51.0 ms"}, {"color": "#4e79a7", "font": {"color": "white"}, "id": "wmtestopsctrl", "label": "wmtestopsctrl", "shape": "dot", "size": 14.933333333333334, "title": "\u003cb\u003ewmtestopsctrl\u003c/b\u003e\u003cbr\u003eCalls: 14\u003cbr\u003eErrors: 0 (0.0%)\u003cbr\u003eAvg: 14.3 ms | P95: 28.0 ms | Max: 28.0 ms"}, {"color": "#f28e2b", "font": {"color": "white"}, "id": "wmuitestcontroller", "label": "wmuitestcontroller", "shape": "dot", "size": 16.933333333333334, "title": "\u003cb\u003ewmuitestcontroller\u003c/b\u003e\u003cbr\u003eCalls: 44\u003cbr\u003eErrors: 0 (0.0%)\u003cbr\u003eAvg: 35.4 ms | P95: 149.0 ms | Max: 189.0 ms"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "#e15759", "from": "wmerrorbudgetalertandnotificationservice", "title": "wmerrorbudgetalertandnotificationservice \u2192 wmerrorbudgetitsmservice\u003cbr\u003eCalls: 15\u003cbr\u003eError rate: 73.3%", "to": "wmerrorbudgetitsmservice", "value": 2.7391304347826084}, {"arrows": "to", "color": "#8888aa", "from": "wmerrorbudgetitsmservice", "title": "wmerrorbudgetitsmservice \u2192 wmeberrordashboardservice\u003cbr\u003eCalls: 6\u003cbr\u003eError rate: 0.0%", "to": "wmeberrordashboardservice", "value": 1.6956521739130435}, {"arrows": "to", "color": "#8888aa", "from": "wmerrorbudgetalertandnotificationservice", "title": "wmerrorbudgetalertandnotificationservice \u2192 wmeberrordashboardservice\u003cbr\u003eCalls: 54\u003cbr\u003eError rate: 27.8%", "to": "wmeberrordashboardservice", "value": 7.260869565217392}, {"arrows": "to", "color": "#8888aa", "from": "wmeberrordashboardservice", "title": "wmeberrordashboardservice \u2192 wmerrorbudgetalertandnotificationservice\u003cbr\u003eCalls: 17\u003cbr\u003eError rate: 0.0%", "to": "wmerrorbudgetalertandnotificationservice", "value": 2.971014492753623}, {"arrows": "to", "color": "#8888aa", "from": "wmeberrordashboardservice", "title": "wmeberrordashboardservice \u2192 wmerrorbudgetitsmservice\u003cbr\u003eCalls: 4\u003cbr\u003eError rate: 25.0%", "to": "wmerrorbudgetitsmservice", "value": 1.463768115942029}, {"arrows": "to", "color": "#8888aa", "from": "wmerrorbudgetstatisticsservice", "title": "wmerrorbudgetstatisticsservice \u2192 wmebonboarding\u003cbr\u003eCalls: 21\u003cbr\u003eError rate: 0.0%", "to": "wmebonboarding", "value": 3.4347826086956523}, {"arrows": "to", "color": "#8888aa", "from": "gateway", "title": "gateway \u2192 wmmeta\u003cbr\u003eCalls: 50\u003cbr\u003eError rate: 0.0%", "to": "wmmeta", "value": 6.797101449275362}, {"arrows": "to", "color": "#8888aa", "from": "wmmeta", "title": "wmmeta \u2192 gateway\u003cbr\u003eCalls: 43\u003cbr\u003eError rate: 0.0%", "to": "gateway", "value": 5.9855072463768115}, {"arrows": "to", "color": "#8888aa", "from": "wmmeta", "title": "wmmeta \u2192 wmebonboarding\u003cbr\u003eCalls: 44\u003cbr\u003eError rate: 0.0%", "to": "wmebonboarding", "value": 6.101449275362318}, {"arrows": "to", "color": "#8888aa", "from": "wmebonboarding", "title": "wmebonboarding \u2192 wmmeta\u003cbr\u003eCalls: 45\u003cbr\u003eError rate: 0.0%", "to": "wmmeta", "value": 6.217391304347826}, {"arrows": "to", "color": "#8888aa", "from": "wmmeta", "title": "wmmeta \u2192 wmuitestcontroller\u003cbr\u003eCalls: 18\u003cbr\u003eError rate: 0.0%", "to": "wmuitestcontroller", "value": 3.0869565217391304}, {"arrows": "to", "color": "#8888aa", "from": "wmuitestcontroller", "title": "wmuitestcontroller \u2192 gateway\u003cbr\u003eCalls: 6\u003cbr\u003eError rate: 0.0%", "to": "gateway", "value": 1.6956521739130435}, {"arrows": "to", "color": "#8888aa", "from": "wmuitestcontroller", "title": "wmuitestcontroller \u2192 wmtestopsctrl\u003cbr\u003eCalls: 2\u003cbr\u003eError rate: 0.0%", "to": "wmtestopsctrl", "value": 1.2318840579710144}, {"arrows": "to", "color": "#8888aa", "from": "wmtestopsctrl", "title": "wmtestopsctrl \u2192 wmmeta\u003cbr\u003eCalls: 2\u003cbr\u003eError rate: 0.0%", "to": "wmmeta", "value": 1.2318840579710144}, {"arrows": "to", "color": "#8888aa", "from": "wmuitestcontroller", "title": "wmuitestcontroller \u2192 wmmeta\u003cbr\u003eCalls: 14\u003cbr\u003eError rate: 0.0%", "to": "wmmeta", "value": 2.6231884057971016}, {"arrows": "to", "color": "#8888aa", "from": "wmebonboarding", "title": "wmebonboarding \u2192 gateway\u003cbr\u003eCalls: 5\u003cbr\u003eError rate: 0.0%", "to": "gateway", "value": 1.5797101449275361}, {"arrows": "to", "color": "#8888aa", "from": "wmuitestcontroller", "title": "wmuitestcontroller \u2192 wmebonboarding\u003cbr\u003eCalls: 2\u003cbr\u003eError rate: 0.0%", "to": "wmebonboarding", "value": 1.2318840579710144}, {"arrows": "to", "color": "#8888aa", "from": "wmebonboarding", "title": "wmebonboarding \u2192 wmerrorbudgetstatisticsservice\u003cbr\u003eCalls: 28\u003cbr\u003eError rate: 0.0%", "to": "wmerrorbudgetstatisticsservice", "value": 4.246376811594203}, {"arrows": "to", "color": "#8888aa", "from": "wmerrorbudgetstatisticsservice", "title": "wmerrorbudgetstatisticsservice \u2192 wmerrorbudgetalertandnotificationservice\u003cbr\u003eCalls: 16\u003cbr\u003eError rate: 0.0%", "to": "wmerrorbudgetalertandnotificationservice", "value": 2.855072463768116}, {"arrows": "to", "color": "#8888aa", "from": "wmerrorbudgetitsmservice", "title": "wmerrorbudgetitsmservice \u2192 wmebonboarding\u003cbr\u003eCalls: 13\u003cbr\u003eError rate: 0.0%", "to": "wmebonboarding", "value": 2.5072463768115942}, {"arrows": "to", "color": "#8888aa", "from": "wmerrorbudgetitsmservice", "title": "wmerrorbudgetitsmservice \u2192 wmmeta\u003cbr\u003eCalls: 5\u003cbr\u003eError rate: 0.0%", "to": "wmmeta", "value": 1.5797101449275361}, {"arrows": "to", "color": "#8888aa", "from": "wmebonboarding", "title": "wmebonboarding \u2192 wmuitestcontroller\u003cbr\u003eCalls: 2\u003cbr\u003eError rate: 0.0%", "to": "wmuitestcontroller", "value": 1.2318840579710144}, {"arrows": "to", "color": "#8888aa", "from": "wmebonboarding", "title": "wmebonboarding \u2192 wmtestopsctrl\u003cbr\u003eCalls: 3\u003cbr\u003eError rate: 0.0%", "to": "wmtestopsctrl", "value": 1.3478260869565217}, {"arrows": "to", "color": "#8888aa", "from": "wmtestopsctrl", "title": "wmtestopsctrl \u2192 wmuitestcontroller\u003cbr\u003eCalls: 3\u003cbr\u003eError rate: 0.0%", "to": "wmuitestcontroller", "value": 1.3478260869565217}, {"arrows": "to", "color": "#8888aa", "from": "gateway", "title": "gateway \u2192 wmebonboarding\u003cbr\u003eCalls: 15\u003cbr\u003eError rate: 0.0%", "to": "wmebonboarding", "value": 2.7391304347826084}, {"arrows": "to", "color": "#8888aa", "from": "wmerrorbudgetstatisticsservice", "title": "wmerrorbudgetstatisticsservice \u2192 gateway\u003cbr\u003eCalls: 8\u003cbr\u003eError rate: 0.0%", "to": "gateway", "value": 1.927536231884058}, {"arrows": "to", "color": "#e15759", "from": "gateway", "title": "gateway \u2192 wmerrorbudgetitsmservice\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 100.0%", "to": "wmerrorbudgetitsmservice", "value": 1.1159420289855073}, {"arrows": "to", "color": "#8888aa", "from": "wmerrorbudgetitsmservice", "title": "wmerrorbudgetitsmservice \u2192 wmerrorbudgetalertandnotificationservice\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 0.0%", "to": "wmerrorbudgetalertandnotificationservice", "value": 1.1159420289855073}, {"arrows": "to", "color": "#8888aa", "from": "wmerrorbudgetalertandnotificationservice", "title": "wmerrorbudgetalertandnotificationservice \u2192 gateway\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 0.0%", "to": "gateway", "value": 1.1159420289855073}, {"arrows": "to", "color": "#8888aa", "from": "wmebonboarding", "title": "wmebonboarding \u2192 wmerrorbudgetitsmservice\u003cbr\u003eCalls: 5\u003cbr\u003eError rate: 0.0%", "to": "wmerrorbudgetitsmservice", "value": 1.5797101449275361}, {"arrows": "to", "color": "#8888aa", "from": "wmerrorbudgetalertandnotificationservice", "title": "wmerrorbudgetalertandnotificationservice \u2192 wmebonboarding\u003cbr\u003eCalls: 7\u003cbr\u003eError rate: 0.0%", "to": "wmebonboarding", "value": 1.8115942028985508}, {"arrows": "to", "color": "#8888aa", "from": "wmebonboarding", "title": "wmebonboarding \u2192 wmerrorbudgetalertandnotificationservice\u003cbr\u003eCalls: 4\u003cbr\u003eError rate: 0.0%", "to": "wmerrorbudgetalertandnotificationservice", "value": 1.463768115942029}, {"arrows": "to", "color": "#8888aa", "from": "wmerrorbudgetalertandnotificationservice", "title": "wmerrorbudgetalertandnotificationservice \u2192 wmerrorbudgetstatisticsservice\u003cbr\u003eCalls: 3\u003cbr\u003eError rate: 0.0%", "to": "wmerrorbudgetstatisticsservice", "value": 1.3478260869565217}, {"arrows": "to", "color": "#8888aa", "from": "wmmeta", "title": "wmmeta \u2192 wmerrorbudgetalertandnotificationservice\u003cbr\u003eCalls: 4\u003cbr\u003eError rate: 0.0%", "to": "wmerrorbudgetalertandnotificationservice", "value": 1.463768115942029}, {"arrows": "to", "color": "#8888aa", "from": "wmerrorbudgetitsmservice", "title": "wmerrorbudgetitsmservice \u2192 gateway\u003cbr\u003eCalls: 3\u003cbr\u003eError rate: 0.0%", "to": "gateway", "value": 1.3478260869565217}, {"arrows": "to", "color": "#8888aa", "from": "gateway", "title": "gateway \u2192 wmerrorbudgetalertandnotificationservice\u003cbr\u003eCalls: 3\u003cbr\u003eError rate: 0.0%", "to": "wmerrorbudgetalertandnotificationservice", "value": 1.3478260869565217}, {"arrows": "to", "color": "#8888aa", "from": "gateway", "title": "gateway \u2192 wm-ai-lapi-engine\u003cbr\u003eCalls: 10\u003cbr\u003eError rate: 0.0%", "to": "wm-ai-lapi-engine", "value": 2.1594202898550723}, {"arrows": "to", "color": "#8888aa", "from": "wm-ai-lapi-engine", "title": "wm-ai-lapi-engine \u2192 gateway\u003cbr\u003eCalls: 10\u003cbr\u003eError rate: 0.0%", "to": "gateway", "value": 2.1594202898550723}, {"arrows": "to", "color": "#8888aa", "from": "gateway", "title": "gateway \u2192 keycloak\u003cbr\u003eCalls: 5\u003cbr\u003eError rate: 0.0%", "to": "keycloak", "value": 1.5797101449275361}, {"arrows": "to", "color": "#8888aa", "from": "keycloak", "title": "keycloak \u2192 gateway\u003cbr\u003eCalls: 4\u003cbr\u003eError rate: 0.0%", "to": "gateway", "value": 1.463768115942029}, {"arrows": "to", "color": "#8888aa", "from": "gateway", "title": "gateway \u2192 s3-storage\u003cbr\u003eCalls: 69\u003cbr\u003eError rate: 0.0%", "to": "s3-storage", "value": 9.0}, {"arrows": "to", "color": "#8888aa", "from": "s3-storage", "title": "s3-storage \u2192 gateway\u003cbr\u003eCalls: 69\u003cbr\u003eError rate: 0.0%", "to": "gateway", "value": 9.0}, {"arrows": "to", "color": "#8888aa", "from": "wmmeta", "title": "wmmeta \u2192 wmerrorbudgetstatisticsservice\u003cbr\u003eCalls: 2\u003cbr\u003eError rate: 0.0%", "to": "wmerrorbudgetstatisticsservice", "value": 1.2318840579710144}, {"arrows": "to", "color": "#8888aa", "from": "wmerrorbudgetstatisticsservice", "title": "wmerrorbudgetstatisticsservice \u2192 wmmeta\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 0.0%", "to": "wmmeta", "value": 1.1159420289855073}, {"arrows": "to", "color": "#8888aa", "from": "wmmeta", "title": "wmmeta \u2192 wmtestopsctrl\u003cbr\u003eCalls: 3\u003cbr\u003eError rate: 0.0%", "to": "wmtestopsctrl", "value": 1.3478260869565217}, {"arrows": "to", "color": "#8888aa", "from": "wmtestopsctrl", "title": "wmtestopsctrl \u2192 wmebonboarding\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 0.0%", "to": "wmebonboarding", "value": 1.1159420289855073}, {"arrows": "to", "color": "#8888aa", "from": "wmebonboarding", "title": "wmebonboarding \u2192 svcontroller\u003cbr\u003eCalls: 2\u003cbr\u003eError rate: 0.0%", "to": "svcontroller", "value": 1.2318840579710144}, {"arrows": "to", "color": "#8888aa", "from": "svcontroller", "title": "svcontroller \u2192 wmmeta\u003cbr\u003eCalls: 2\u003cbr\u003eError rate: 0.0%", "to": "wmmeta", "value": 1.2318840579710144}, {"arrows": "to", "color": "#8888aa", "from": "wmmeta", "title": "wmmeta \u2192 svcontroller\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 0.0%", "to": "svcontroller", "value": 1.1159420289855073}, {"arrows": "to", "color": "#8888aa", "from": "svcontroller", "title": "svcontroller \u2192 wmuitestcontroller\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 0.0%", "to": "wmuitestcontroller", "value": 1.1159420289855073}, {"arrows": "to", "color": "#8888aa", "from": "wmtestopsctrl", "title": "wmtestopsctrl \u2192 gateway\u003cbr\u003eCalls: 2\u003cbr\u003eError rate: 0.0%", "to": "gateway", "value": 1.2318840579710144}, {"arrows": "to", "color": "#8888aa", "from": "gateway", "title": "gateway \u2192 svcontroller\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 0.0%", "to": "svcontroller", "value": 1.1159420289855073}, {"arrows": "to", "color": "#8888aa", "from": "svcontroller", "title": "svcontroller \u2192 wmebonboarding\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 0.0%", "to": "wmebonboarding", "value": 1.1159420289855073}, {"arrows": "to", "color": "#8888aa", "from": "gateway", "title": "gateway \u2192 wmuitestcontroller\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 0.0%", "to": "wmuitestcontroller", "value": 1.1159420289855073}, {"arrows": "to", "color": "#8888aa", "from": "wmtestopsctrl", "title": "wmtestopsctrl \u2192 svcontroller\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 0.0%", "to": "svcontroller", "value": 1.1159420289855073}, {"arrows": "to", "color": "#8888aa", "from": "svcontroller", "title": "svcontroller \u2192 gateway\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 0.0%", "to": "gateway", "value": 1.1159420289855073}, {"arrows": "to", "color": "#8888aa", "from": "wmerrorbudgetstatisticsservice", "title": "wmerrorbudgetstatisticsservice \u2192 wmebexecuter\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 0.0%", "to": "wmebexecuter", "value": 1.1159420289855073}, {"arrows": "to", "color": "#8888aa", "from": "wmtestopsctrl", "title": "wmtestopsctrl \u2192 wmchaoscontroller\u003cbr\u003eCalls: 3\u003cbr\u003eError rate: 0.0%", "to": "wmchaoscontroller", "value": 1.3478260869565217}, {"arrows": "to", "color": "#8888aa", "from": "wmchaoscontroller", "title": "wmchaoscontroller \u2192 wmtestopsctrl\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 0.0%", "to": "wmtestopsctrl", "value": 1.1159420289855073}, {"arrows": "to", "color": "#8888aa", "from": "wmchaoscontroller", "title": "wmchaoscontroller \u2192 gateway\u003cbr\u003eCalls: 6\u003cbr\u003eError rate: 0.0%", "to": "gateway", "value": 1.6956521739130435}, {"arrows": "to", "color": "#8888aa", "from": "gateway", "title": "gateway \u2192 wmchaoscontroller\u003cbr\u003eCalls: 4\u003cbr\u003eError rate: 0.0%", "to": "wmchaoscontroller", "value": 1.463768115942029}, {"arrows": "to", "color": "#8888aa", "from": "wmchaoscontroller", "title": "wmchaoscontroller \u2192 wmmeta\u003cbr\u003eCalls: 6\u003cbr\u003eError rate: 0.0%", "to": "wmmeta", "value": 1.6956521739130435}, {"arrows": "to", "color": "#8888aa", "from": "wmmeta", "title": "wmmeta \u2192 wmchaoscontroller\u003cbr\u003eCalls: 7\u003cbr\u003eError rate: 14.3%", "to": "wmchaoscontroller", "value": 1.8115942028985508}, {"arrows": "to", "color": "#8888aa", "from": "gateway", "title": "gateway \u2192 wmtestopsctrl\u003cbr\u003eCalls: 2\u003cbr\u003eError rate: 0.0%", "to": "wmtestopsctrl", "value": 1.2318840579710144}, {"arrows": "to", "color": "#8888aa", "from": "wmuitestcontroller", "title": "wmuitestcontroller \u2192 wmchaoscontroller\u003cbr\u003eCalls: 1\u003cbr\u003eError rate: 0.0%", "to": "wmchaoscontroller", "value": 1.1159420289855073}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"physics": {"barnesHut": {"gravitationalConstant": -8000, "springLength": 220}, "stabilization": {"iterations": 300}}, "edges": {"arrows": {"to": {"enabled": true, "scaleFactor": 0.6}}, "smooth": {"type": "curvedCW", "roundness": 0.2}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

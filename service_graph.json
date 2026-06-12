@@ -1,0 +1,861 @@
+{
+  "summary": {
+    "total_requests": 9738,
+    "unique_services": 18,
+    "unique_tids": 4322,
+    "multi_tid_chains": 380,
+    "total_errors": 84
+  },
+  "services": {
+    "wmerrorbudgetitsmservice": {
+      "count": 29,
+      "errors": 13,
+      "error_rate": 0.448,
+      "avg_ms": 42.3,
+      "p95_ms": 87.6,
+      "max_ms": 93.0,
+      "top_endpoints": [
+        {
+          "path": "POST /services/wmerrorbudgetitsmservice/api/itsm/getIncidentDetails",
+          "count": 18
+        },
+        {
+          "path": "GET /services/wmerrorbudgetitsmservice/api/gate-policy/chronology",
+          "count": 5
+        },
+        {
+          "path": "POST /services/wmerrorbudgetitsmservice/api/itsm/scheduleJob",
+          "count": 3
+        },
+        {
+          "path": "GET /api/sts/grant-token",
+          "count": 3
+        }
+      ]
+    },
+    "wmebonboarding": {
+      "count": 3212,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_ms": 52.0,
+      "p95_ms": 24.0,
+      "max_ms": 60086.0,
+      "top_endpoints": [
+        {
+          "path": "GET /services/wmebonboarding/api/projects/{id}",
+          "count": 1208
+        },
+        {
+          "path": "GET /services/wmebonboarding/api/applications/{id}/transactions",
+          "count": 1003
+        },
+        {
+          "path": "GET /services/wmebonboarding/api/transformer-bucketings/onboarded",
+          "count": 132
+        },
+        {
+          "path": "GET /services/wmebonboarding/api/pipelines/tool/{id}/ERROR",
+          "count": 102
+        },
+        {
+          "path": "GET /services/wmebonboarding/api/connectors/{id}",
+          "count": 58
+        },
+        {
+          "path": "GET /services/wmebonboarding/api/transformer-bucketings/unique",
+          "count": 57
+        },
+        {
+          "path": "GET /services/wmebonboarding/api/event-configs",
+          "count": 53
+        },
+        {
+          "path": "GET /services/wmebonboarding/api/reimport-data-trackers/status/IN_PROGRESS",
+          "count": 53
+        },
+        {
+          "path": "GET /services/wmebonboarding/api/custom-metric-configs",
+          "count": 52
+        },
+        {
+          "path": "GET /services/wmebonboarding/api/notifications/{id}",
+          "count": 39
+        }
+      ]
+    },
+    "wmerrorbudgetalertandnotificationservice": {
+      "count": 110,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_ms": 57.5,
+      "p95_ms": 199.6,
+      "max_ms": 352.0,
+      "top_endpoints": [
+        {
+          "path": "POST /services/wmerrorbudgetalertandnotificationservice/api/alert/trigger",
+          "count": 39
+        },
+        {
+          "path": "GET /api/sts/grant-token",
+          "count": 39
+        },
+        {
+          "path": "POST /services/wmerrorbudgetalertandnotificationservice/api/alerts-action/count",
+          "count": 19
+        },
+        {
+          "path": "GET /services/wmerrorbudgetalertandnotificationservice/api/alerts-action/chronology/APPLICATION",
+          "count": 5
+        },
+        {
+          "path": "POST /services/wmerrorbudgetalertandnotificationservice/api/dev-actions/count",
+          "count": 4
+        },
+        {
+          "path": "POST /services/wmerrorbudgetalertandnotificationservice/api/actions/count",
+          "count": 4
+        }
+      ]
+    },
+    "wmeberrordashboardservice": {
+      "count": 198,
+      "errors": 44,
+      "error_rate": 0.222,
+      "avg_ms": 148.5,
+      "p95_ms": 606.0,
+      "max_ms": 1120.0,
+      "top_endpoints": [
+        {
+          "path": "GET /api/sts/grant-token",
+          "count": 99
+        },
+        {
+          "path": "POST /services/wmeberrordashboardservice/api/job/error-dashboard/trigger",
+          "count": 99
+        }
+      ]
+    },
+    "wmerrorbudgetstatisticsservice": {
+      "count": 1071,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_ms": 48.2,
+      "p95_ms": 71.0,
+      "max_ms": 909.0,
+      "top_endpoints": [
+        {
+          "path": "GET /services/wmerrorbudgetstatisticsservice/api/transactions/summary/series/all",
+          "count": 945
+        },
+        {
+          "path": "GET /services/wmerrorbudgetstatisticsservice/api/applications/summary",
+          "count": 27
+        },
+        {
+          "path": "GET /services/wmerrorbudgetstatisticsservice/api/transactions/summary",
+          "count": 14
+        },
+        {
+          "path": "GET /services/wmerrorbudgetstatisticsservice/api/summary-dashboard/slo/count",
+          "count": 14
+        },
+        {
+          "path": "GET /services/wmerrorbudgetstatisticsservice/api/release-histories/sensitive",
+          "count": 14
+        },
+        {
+          "path": "GET /services/wmerrorbudgetstatisticsservice/api/summary-dashboard/slo/stats/ACTIVE",
+          "count": 10
+        },
+        {
+          "path": "GET /services/wmerrorbudgetstatisticsservice/api/applications/summary/series/progressive",
+          "count": 5
+        },
+        {
+          "path": "GET /services/wmerrorbudgetstatisticsservice/api/trend/application/{id}",
+          "count": 5
+        },
+        {
+          "path": "GET /services/wmerrorbudgetstatisticsservice/api/applications/summary/series",
+          "count": 5
+        },
+        {
+          "path": "GET /services/wmerrorbudgetstatisticsservice/api/applications/summary/series/rolling",
+          "count": 5
+        }
+      ]
+    },
+    "sts-auth": {
+      "count": 1037,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_ms": 2.8,
+      "p95_ms": 4.0,
+      "max_ms": 96.0,
+      "top_endpoints": [
+        {
+          "path": "GET /api/sts/grant-token",
+          "count": 1037
+        }
+      ]
+    },
+    "selenium-grid": {
+      "count": 2238,
+      "errors": 22,
+      "error_rate": 0.01,
+      "avg_ms": 53.8,
+      "p95_ms": 216.5,
+      "max_ms": 3932.0,
+      "top_endpoints": [
+        {
+          "path": "GET /wd/hub/session/{session}/element/{elem}/rect",
+          "count": 436
+        },
+        {
+          "path": "POST /wd/hub/session/{session}/execute/sync",
+          "count": 413
+        },
+        {
+          "path": "GET /wd/hub/session/{session}/window/handles",
+          "count": 185
+        },
+        {
+          "path": "POST /wd/hub/session/{session}/se/log",
+          "count": 173
+        },
+        {
+          "path": "GET /wd/hub/session/{session}/screenshot",
+          "count": 160
+        },
+        {
+          "path": "GET /wd/hub/session/{session}/window/rect",
+          "count": 138
+        },
+        {
+          "path": "POST /wd/hub/session/{session}/frame",
+          "count": 94
+        },
+        {
+          "path": "GET /wd/hub/session/{session}/element/{elem}/css/visibility",
+          "count": 80
+        },
+        {
+          "path": "GET /wd/hub/session/{session}/element/{elem}/css/opacity",
+          "count": 80
+        },
+        {
+          "path": "GET /wd/hub/session/{session}/element/{elem}/enabled",
+          "count": 80
+        }
+      ]
+    },
+    "wmmeta": {
+      "count": 417,
+      "errors": 1,
+      "error_rate": 0.002,
+      "avg_ms": 36.6,
+      "p95_ms": 160.2,
+      "max_ms": 496.0,
+      "top_endpoints": [
+        {
+          "path": "GET /services/wmmeta/api/menu-entitlements/evaluate",
+          "count": 92
+        },
+        {
+          "path": "GET /services/wmmeta/api/app-tool-instances/{id}",
+          "count": 61
+        },
+        {
+          "path": "GET /services/wmmeta/api/applications",
+          "count": 48
+        },
+        {
+          "path": "GET /services/wmmeta/api/licensed-applications",
+          "count": 23
+        },
+        {
+          "path": "GET /services/wmmeta/api/applications/unique-name",
+          "count": 23
+        },
+        {
+          "path": "GET /services/wmmeta/api/project-metas",
+          "count": 17
+        },
+        {
+          "path": "GET /services/wmmeta/api/app-global-tools",
+          "count": 16
+        },
+        {
+          "path": "GET /services/wmmeta/api/licenses",
+          "count": 16
+        },
+        {
+          "path": "GET /services/wmmeta/api/business-unit-metas",
+          "count": 14
+        },
+        {
+          "path": "GET /services/wmmeta/api/global-tool-instances/",
+          "count": 13
+        }
+      ]
+    },
+    "wmtestopsctrl": {
+      "count": 14,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_ms": 14.3,
+      "p95_ms": 28.0,
+      "max_ms": 28.0,
+      "top_endpoints": [
+        {
+          "path": "GET /services/wmtestopsctrl/api/projects/uuid",
+          "count": 3
+        },
+        {
+          "path": "GET /services/wmtestopsctrl/api/api-collections",
+          "count": 3
+        },
+        {
+          "path": "GET /services/wmtestopsctrl/api/environments",
+          "count": 2
+        },
+        {
+          "path": "GET /services/wmtestopsctrl/api/business-units/uuid",
+          "count": 1
+        },
+        {
+          "path": "PUT /services/wmtestopsctrl/api/applications/{id}",
+          "count": 1
+        },
+        {
+          "path": "GET /services/wmtestopsctrl/api/applications/uuid",
+          "count": 1
+        },
+        {
+          "path": "POST /services/wmtestopsctrl/api/applications",
+          "count": 1
+        },
+        {
+          "path": "POST /services/wmtestopsctrl/api/business-units",
+          "count": 1
+        },
+        {
+          "path": "GET /services/wmtestopsctrl/api/api-request-settings",
+          "count": 1
+        }
+      ]
+    },
+    "keycloak": {
+      "count": 275,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_ms": 10.8,
+      "p95_ms": 40.9,
+      "max_ms": 96.0,
+      "top_endpoints": [
+        {
+          "path": "GET /realms/watermelon/protocol/openid-connect/certs",
+          "count": 72
+        },
+        {
+          "path": "POST /realms/watermelon/protocol/openid-connect/token",
+          "count": 36
+        },
+        {
+          "path": "POST /admin/realms/watermelon/roles",
+          "count": 27
+        },
+        {
+          "path": "GET /admin/realms/watermelon/users/{id}a040f2-907c-4ee7-a8fa-b9819f6c3d6c/role-mappings/realm/composite",
+          "count": 23
+        },
+        {
+          "path": "GET /admin/realms/watermelon/users/ce4901c3-98ba-405a-9b71-77e685a85699/role-mappings/realm/composite",
+          "count": 9
+        },
+        {
+          "path": "GET /admin/realms/watermelon/users/{id}a040f2-907c-4ee7-a8fa-b9819f6c3d6c",
+          "count": 6
+        },
+        {
+          "path": "GET /admin/realms/watermelon",
+          "count": 5
+        },
+        {
+          "path": "GET /realms/watermelon/protocol/openid-connect/auth",
+          "count": 5
+        },
+        {
+          "path": "GET /admin/realms/watermelon/users/{id}a040f2-907c-4ee7-a8fa-b9819f6c3d6c/groups",
+          "count": 4
+        },
+        {
+          "path": "POST /admin/realms/watermelon/users/{id}a040f2-907c-4ee7-a8fa-b9819f6c3d6c/role-mappings/realm",
+          "count": 4
+        }
+      ]
+    },
+    "gateway": {
+      "count": 765,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_ms": 6.3,
+      "p95_ms": 31.1,
+      "max_ms": 158.0,
+      "top_endpoints": [
+        {
+          "path": "POST /",
+          "count": 32
+        },
+        {
+          "path": "GET /api/admin/users/{id}a040f2-907c-4ee7-a8fa-b9819f6c3d6c/roles",
+          "count": 21
+        },
+        {
+          "path": "GET /Lato-Regular.674fc4748ed43d04.woff2",
+          "count": 15
+        },
+        {
+          "path": "GET /styles.c9fdbd6937ac995c.css",
+          "count": 11
+        },
+        {
+          "path": "GET /manifest.webapp",
+          "count": 11
+        },
+        {
+          "path": "GET /api/gateway/version",
+          "count": 10
+        },
+        {
+          "path": "GET /api/gateway/disabled-menu-items",
+          "count": 10
+        },
+        {
+          "path": "GET /polyfills.ff86620e7fcb08d3.js",
+          "count": 10
+        },
+        {
+          "path": "GET /{id}.a8d9894b50aea529.js",
+          "count": 10
+        },
+        {
+          "path": "GET /scripts.c3b708165ea10d97.js",
+          "count": 10
+        }
+      ]
+    },
+    "wmuitestcontroller": {
+      "count": 44,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_ms": 35.4,
+      "p95_ms": 149.0,
+      "max_ms": 189.0,
+      "top_endpoints": [
+        {
+          "path": "GET /services/wmuitestcontroller/api/grids",
+          "count": 6
+        },
+        {
+          "path": "GET /services/wmuitestcontroller/api/wm-applications/uuid/{id}e7c3c29-a6ea-4333-9bf1-29d69ba9cb3e",
+          "count": 5
+        },
+        {
+          "path": "GET /services/wmuitestcontroller/api/device-farms",
+          "count": 5
+        },
+        {
+          "path": "GET /services/wmuitestcontroller/api/execute/test-packs",
+          "count": 3
+        },
+        {
+          "path": "GET /services/wmuitestcontroller/api/wm-applications/uuid/{id}a05d-c609-4afc-85e4-218fa5b5b6a7",
+          "count": 3
+        },
+        {
+          "path": "GET /services/wmuitestcontroller/api/wm-applications/uuid/fd62ced0-474b-480a-b3d6-3acc9e06c002",
+          "count": 2
+        },
+        {
+          "path": "GET /services/wmuitestcontroller/api/wm-applications/uuid/dab72da1-6e47-4949-a7df-2162b7a4406b",
+          "count": 2
+        },
+        {
+          "path": "GET /services/wmuitestcontroller/api/wm-projects/uuidCode/{id}ed5e-0ea9-4786-913b-afbb12908c6e",
+          "count": 2
+        },
+        {
+          "path": "GET /services/wmuitestcontroller/api/task-executions",
+          "count": 2
+        },
+        {
+          "path": "GET /services/wmuitestcontroller/api/test-packs",
+          "count": 2
+        }
+      ]
+    },
+    "s3-storage": {
+      "count": 209,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_ms": 10.2,
+      "p95_ms": 15.6,
+      "max_ms": 21.0,
+      "top_endpoints": [
+        {
+          "path": "PUT /wm-ui-test-screenshots/{id}/{id}/object.png",
+          "count": 79
+        },
+        {
+          "path": "PUT /wm-ui-test-screenshots/{id}/{id}/object.html",
+          "count": 49
+        },
+        {
+          "path": "PUT /wm-ui-test-screenshots/chrome-141-0-7390-65-11-306df035-8a7f-4324-8be0-75d1e27f09e4/{id}.344012_Click.png",
+          "count": 1
+        },
+        {
+          "path": "PUT /wm-ui-test-screenshots/chrome-141-0-7390-65-11-306df035-8a7f-4324-8be0-75d1e27f09e4/{id}.0519612_Click.png",
+          "count": 1
+        },
+        {
+          "path": "PUT /wm-ui-test-screenshots/chrome-141-0-7390-65-11-306df035-8a7f-4324-8be0-75d1e27f09e4/{id}.7186913_Click.png",
+          "count": 1
+        },
+        {
+          "path": "PUT /wm-ui-test-screenshots/chrome-141-0-7390-65-11-306df035-8a7f-4324-8be0-75d1e27f09e4/{id}.1443238_Click.png",
+          "count": 1
+        },
+        {
+          "path": "PUT /wm-ui-test-screenshots/chrome-141-0-7390-65-11-306df035-8a7f-4324-8be0-75d1e27f09e4/{id}.387219_Click.png",
+          "count": 1
+        },
+        {
+          "path": "PUT /wm-ui-test-screenshots/chrome-141-0-7390-65-11-306df035-8a7f-4324-8be0-75d1e27f09e4/{id}.6793551_Click.png",
+          "count": 1
+        },
+        {
+          "path": "PUT /wm-ui-test-screenshots/chrome-141-0-7390-65-11-306df035-8a7f-4324-8be0-75d1e27f09e4/{id}.8959768_Go%20to.png",
+          "count": 1
+        },
+        {
+          "path": "PUT /wm-ui-test-screenshots/chrome-141-0-7390-65-11-94838f27-2c52-46ac-9d17-82b7e8e4e985/{id}.7866075_Click.png",
+          "count": 1
+        }
+      ]
+    },
+    "wm-ai-lapi-engine": {
+      "count": 10,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_ms": 2.3,
+      "p95_ms": 3.5,
+      "max_ms": 4.0,
+      "top_endpoints": [
+        {
+          "path": "GET /services/wm-ai-lapi-engine/specs/list",
+          "count": 10
+        }
+      ]
+    },
+    "wmebexecuter": {
+      "count": 4,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_ms": 1018.5,
+      "p95_ms": 1900.9,
+      "max_ms": 1999.0,
+      "top_endpoints": [
+        {
+          "path": "POST /services/wmebexecuter/api/runners/test",
+          "count": 3
+        },
+        {
+          "path": "POST /services/wmebexecuter/api/runners/schedule",
+          "count": 1
+        }
+      ]
+    },
+    "wmchaoscontroller": {
+      "count": 96,
+      "errors": 4,
+      "error_rate": 0.042,
+      "avg_ms": 141.4,
+      "p95_ms": 579.5,
+      "max_ms": 2661.0,
+      "top_endpoints": [
+        {
+          "path": "POST /services/wmchaoscontroller/api/v1/chaos/execution/latest/status",
+          "count": 16
+        },
+        {
+          "path": "GET /services/wmchaoscontroller/api/v1/chaos/execution/summary/{id}F362485734AF09E21B4BD5FA288A2",
+          "count": 15
+        },
+        {
+          "path": "GET /services/wmchaoscontroller/api/v1/chaos/execution/steadyStateStatus",
+          "count": 6
+        },
+        {
+          "path": "GET /services/wmchaoscontroller/api/v1/chaos/repo/count",
+          "count": 5
+        },
+        {
+          "path": "GET /services/wmchaoscontroller/api/v1/cloud/resources/getCloudResources/platform",
+          "count": 4
+        },
+        {
+          "path": "GET /services/wmchaoscontroller/api/v1/chaos/repo",
+          "count": 4
+        },
+        {
+          "path": "GET /services/wmchaoscontroller/api/v1/platform/VM/situations/disableMultiple",
+          "count": 4
+        },
+        {
+          "path": "POST /services/wmchaoscontroller/api/v1/azure/check_credentials",
+          "count": 4
+        },
+        {
+          "path": "GET /services/wmchaoscontroller/api/v1/platforms",
+          "count": 4
+        },
+        {
+          "path": "GET /services/wmchaoscontroller/api/v1/azure/resourcegroup",
+          "count": 4
+        }
+      ]
+    },
+    "svcontroller": {
+      "count": 5,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_ms": 87.4,
+      "p95_ms": 269.6,
+      "max_ms": 322.0,
+      "top_endpoints": [
+        {
+          "path": "PUT /services/svcontroller/api/applications/{id}",
+          "count": 1
+        },
+        {
+          "path": "GET /services/svcontroller/api/business-units",
+          "count": 1
+        },
+        {
+          "path": "POST /services/svcontroller/api/applications",
+          "count": 1
+        },
+        {
+          "path": "GET /services/svcontroller/api/applications",
+          "count": 1
+        },
+        {
+          "path": "POST /services/svcontroller/api/business-units",
+          "count": 1
+        }
+      ]
+    },
+    "wmtestdatafactory": {
+      "count": 4,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_ms": 27.5,
+      "p95_ms": 48.7,
+      "max_ms": 51.0,
+      "top_endpoints": [
+        {
+          "path": "GET /services/wmtestdatafactory/api/data-set-rows/{id}",
+          "count": 2
+        },
+        {
+          "path": "GET /services/wmtestdatafactory/api/data-sets/{id}/revisions/{id}/data-set-rows/ids",
+          "count": 2
+        }
+      ]
+    }
+  },
+  "top_edges": [
+    {
+      "from": "gateway",
+      "to": "s3-storage",
+      "count": 69,
+      "error_rate": 0.0
+    },
+    {
+      "from": "s3-storage",
+      "to": "gateway",
+      "count": 69,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmerrorbudgetalertandnotificationservice",
+      "to": "wmeberrordashboardservice",
+      "count": 54,
+      "error_rate": 0.278
+    },
+    {
+      "from": "gateway",
+      "to": "wmmeta",
+      "count": 50,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmebonboarding",
+      "to": "wmmeta",
+      "count": 45,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmmeta",
+      "to": "wmebonboarding",
+      "count": 44,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmmeta",
+      "to": "gateway",
+      "count": 43,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmebonboarding",
+      "to": "wmerrorbudgetstatisticsservice",
+      "count": 28,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmerrorbudgetstatisticsservice",
+      "to": "wmebonboarding",
+      "count": 21,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmmeta",
+      "to": "wmuitestcontroller",
+      "count": 18,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmeberrordashboardservice",
+      "to": "wmerrorbudgetalertandnotificationservice",
+      "count": 17,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmerrorbudgetstatisticsservice",
+      "to": "wmerrorbudgetalertandnotificationservice",
+      "count": 16,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmerrorbudgetalertandnotificationservice",
+      "to": "wmerrorbudgetitsmservice",
+      "count": 15,
+      "error_rate": 0.733
+    },
+    {
+      "from": "gateway",
+      "to": "wmebonboarding",
+      "count": 15,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmuitestcontroller",
+      "to": "wmmeta",
+      "count": 14,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmerrorbudgetitsmservice",
+      "to": "wmebonboarding",
+      "count": 13,
+      "error_rate": 0.0
+    },
+    {
+      "from": "gateway",
+      "to": "wm-ai-lapi-engine",
+      "count": 10,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wm-ai-lapi-engine",
+      "to": "gateway",
+      "count": 10,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmerrorbudgetstatisticsservice",
+      "to": "gateway",
+      "count": 8,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmerrorbudgetalertandnotificationservice",
+      "to": "wmebonboarding",
+      "count": 7,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmmeta",
+      "to": "wmchaoscontroller",
+      "count": 7,
+      "error_rate": 0.143
+    },
+    {
+      "from": "wmerrorbudgetitsmservice",
+      "to": "wmeberrordashboardservice",
+      "count": 6,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmuitestcontroller",
+      "to": "gateway",
+      "count": 6,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmchaoscontroller",
+      "to": "gateway",
+      "count": 6,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmchaoscontroller",
+      "to": "wmmeta",
+      "count": 6,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmebonboarding",
+      "to": "gateway",
+      "count": 5,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmerrorbudgetitsmservice",
+      "to": "wmmeta",
+      "count": 5,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmebonboarding",
+      "to": "wmerrorbudgetitsmservice",
+      "count": 5,
+      "error_rate": 0.0
+    },
+    {
+      "from": "gateway",
+      "to": "keycloak",
+      "count": 5,
+      "error_rate": 0.0
+    },
+    {
+      "from": "wmeberrordashboardservice",
+      "to": "wmerrorbudgetitsmservice",
+      "count": 4,
+      "error_rate": 0.25
+    }
+  ]
+}
