@@ -1,0 +1,950 @@
+{
+  "description": "User journeys reconstructed from usermgmt service logs (PNB MetLife customer portal). Log lines were grouped into per-request sessions by Tomcat thread ID (split at a 5s idle gap), then clustered into journey types by the similarity of their API method-call sequences (TF-IDF + KMeans).",
+  "source_log_file": "azure_nonsimple.txt",
+  "field_guide": {
+    "journey_id": "Cluster number; matches the badge/colour in clusters.html",
+    "label": "Two most common entry methods of the journey, joined with ' + '",
+    "session_count": "Number of request sessions assigned to this journey",
+    "share_of_traffic_pct": "session_count as a percentage of all sessions",
+    "sessions_with_errors": "Sessions containing at least one ERROR-level log line",
+    "duration_ms": "Session wall-clock duration (first to last log line)",
+    "entry_points": "Methods sessions start with, and how often",
+    "exit_points": "Methods sessions end with, and how often",
+    "top_transitions": "Most frequent consecutive method pairs within this journey",
+    "example_sequences": "Full method-call sequences of real sessions in this journey"
+  },
+  "summary": {
+    "total_sessions": 521,
+    "journey_types": 8,
+    "sessions_with_errors": 47,
+    "overall_error_rate_pct": 9.0,
+    "avg_session_duration_ms": 1483.1
+  },
+  "journeys": [
+    {
+      "journey_id": 0,
+      "label": "preloginBanners + getCustomerSessionDetailsBySessionId",
+      "session_count": 144,
+      "share_of_traffic_pct": 27.6,
+      "sessions_with_errors": 0,
+      "error_rate_pct": 0.0,
+      "duration_ms": {
+        "avg": 38.5,
+        "p95": 72.4
+      },
+      "entry_points": [
+        {
+          "method": "preloginBanners",
+          "count": 134
+        },
+        {
+          "method": "getCustomerSessionDetailsBySessionId",
+          "count": 10
+        }
+      ],
+      "exit_points": [
+        {
+          "method": "getPreloginBannerResponseDto",
+          "count": 144
+        }
+      ],
+      "top_transitions": [
+        {
+          "from": "preloginBanners",
+          "to": "getPreloginBannerResponseDto",
+          "count": 144
+        },
+        {
+          "from": "getCustomerSessionDetailsBySessionId",
+          "to": "preloginBanners",
+          "count": 10
+        }
+      ],
+      "example_sequences": [
+        [
+          "preloginBanners",
+          "getPreloginBannerResponseDto"
+        ],
+        [
+          "preloginBanners",
+          "getPreloginBannerResponseDto"
+        ],
+        [
+          "preloginBanners",
+          "getPreloginBannerResponseDto"
+        ]
+      ]
+    },
+    {
+      "journey_id": 2,
+      "label": "getCustomerSessionDetailsBySessionId + getProfileDetailResponse",
+      "session_count": 106,
+      "share_of_traffic_pct": 20.3,
+      "sessions_with_errors": 0,
+      "error_rate_pct": 0.0,
+      "duration_ms": {
+        "avg": 644.4,
+        "p95": 1354.2
+      },
+      "entry_points": [
+        {
+          "method": "getCustomerSessionDetailsBySessionId",
+          "count": 104
+        },
+        {
+          "method": "getProfileDetailResponse",
+          "count": 2
+        }
+      ],
+      "exit_points": [
+        {
+          "method": "saveLoginAuditDetails",
+          "count": 104
+        },
+        {
+          "method": "trackServiceRequest",
+          "count": 2
+        }
+      ],
+      "top_transitions": [
+        {
+          "from": "getCustomerSessionDetailsBySessionId",
+          "to": "profileDetails",
+          "count": 104
+        },
+        {
+          "from": "profileDetails",
+          "to": "saveLoginAuditDetails",
+          "count": 104
+        },
+        {
+          "from": "saveLoginAuditDetails",
+          "to": "getCustomerSessionDetailsBySessionId",
+          "count": 104
+        },
+        {
+          "from": "getCustomerSessionDetailsBySessionId",
+          "to": "getCustomerDataByCustomerId",
+          "count": 104
+        },
+        {
+          "from": "getCustomerDataByCustomerId",
+          "to": "trackServiceRequest",
+          "count": 104
+        },
+        {
+          "from": "getProfileDetailResponse",
+          "to": "saveLoginAuditDetails",
+          "count": 104
+        },
+        {
+          "from": "trackServiceRequest",
+          "to": "getProfileDetailResponse",
+          "count": 102
+        }
+      ],
+      "example_sequences": [
+        [
+          "getCustomerSessionDetailsBySessionId",
+          "profileDetails",
+          "saveLoginAuditDetails",
+          "getCustomerSessionDetailsBySessionId",
+          "getCustomerDataByCustomerId",
+          "trackServiceRequest",
+          "getProfileDetailResponse",
+          "saveLoginAuditDetails"
+        ],
+        [
+          "getCustomerSessionDetailsBySessionId",
+          "profileDetails",
+          "saveLoginAuditDetails",
+          "getCustomerSessionDetailsBySessionId",
+          "getCustomerDataByCustomerId",
+          "trackServiceRequest",
+          "getProfileDetailResponse",
+          "saveLoginAuditDetails"
+        ],
+        [
+          "getCustomerSessionDetailsBySessionId",
+          "profileDetails",
+          "saveLoginAuditDetails",
+          "getCustomerSessionDetailsBySessionId",
+          "getCustomerDataByCustomerId",
+          "trackServiceRequest",
+          "getProfileDetailResponse",
+          "saveLoginAuditDetails"
+        ]
+      ]
+    },
+    {
+      "journey_id": 6,
+      "label": "loginOtpValidate + getCustomerSessionDetailsBySessionId",
+      "session_count": 105,
+      "share_of_traffic_pct": 20.2,
+      "sessions_with_errors": 42,
+      "error_rate_pct": 40.0,
+      "duration_ms": {
+        "avg": 2643.5,
+        "p95": 8228.2
+      },
+      "entry_points": [
+        {
+          "method": "loginOtpValidate",
+          "count": 46
+        },
+        {
+          "method": "getCustomerSessionDetailsBySessionId",
+          "count": 38
+        },
+        {
+          "method": "externalLinkDetails",
+          "count": 9
+        },
+        {
+          "method": "saveLoginAuditDetails",
+          "count": 7
+        },
+        {
+          "method": "SendDownloadAppSMS",
+          "count": 3
+        }
+      ],
+      "exit_points": [
+        {
+          "method": "saveLoginAuditDetails",
+          "count": 76
+        },
+        {
+          "method": "savePolicyDetails",
+          "count": 16
+        },
+        {
+          "method": "saveLoginHistoryDetails",
+          "count": 11
+        },
+        {
+          "method": "getPolicyOrClientId",
+          "count": 1
+        },
+        {
+          "method": "createServiceRequest",
+          "count": 1
+        }
+      ],
+      "top_transitions": [
+        {
+          "from": "saveLoginAuditDetails",
+          "to": "saveLoginAuditDetails",
+          "count": 397
+        },
+        {
+          "from": "getAccessToken",
+          "to": "saveLoginAuditDetails",
+          "count": 184
+        },
+        {
+          "from": "getPostResponseFromClientApi",
+          "to": "saveLoginAuditDetails",
+          "count": 183
+        },
+        {
+          "from": "saveLoginAuditDetails",
+          "to": "getAccessToken",
+          "count": 183
+        },
+        {
+          "from": "validateOtp",
+          "to": "getPostResponseFromClientApi",
+          "count": 82
+        },
+        {
+          "from": "saveLoginAuditDetails",
+          "to": "getCustomerSessionDetailsBySessionId",
+          "count": 58
+        },
+        {
+          "from": "getOtpTransactionDetails",
+          "to": "saveLoginAuditDetails",
+          "count": 47
+        },
+        {
+          "from": "getCustomerAccountLockStatusByClientId",
+          "to": "getClientValidateOtpResponse",
+          "count": 47
+        },
+        {
+          "from": "getClientValidateOtpResponse",
+          "to": "validateOtp",
+          "count": 47
+        },
+        {
+          "from": "loginOtpValidate",
+          "to": "getOtpTransactionDetails",
+          "count": 46
+        },
+        {
+          "from": "getCustomerSessionDetailsBySessionId",
+          "to": "getClientLoginResponse",
+          "count": 46
+        },
+        {
+          "from": "getClientLoginResponse",
+          "to": "login",
+          "count": 46
+        }
+      ],
+      "example_sequences": [
+        [
+          "loginOtpValidate",
+          "getOtpTransactionDetails",
+          "saveLoginAuditDetails",
+          "getCustomerSessionDetailsBySessionId",
+          "getClientLoginResponse",
+          "login",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "getCustomerAccountLockStatusByClientId",
+          "getClientValidateOtpResponse",
+          "validateOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginHistoryDetails"
+        ],
+        [
+          "getCustomerSessionDetailsBySessionId",
+          "sendOtpAadhaarAuth",
+          "getPolicyOrClientId",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails"
+        ],
+        [
+          "saveLoginAuditDetails",
+          "checkProspectUserByLoginId",
+          "saveLoginAuditDetails",
+          "getClientApiResponseOfValidateClient",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails"
+        ]
+      ]
+    },
+    {
+      "journey_id": 1,
+      "label": "loginOtpGenerate + verifyRecaptcha",
+      "session_count": 89,
+      "share_of_traffic_pct": 17.1,
+      "sessions_with_errors": 1,
+      "error_rate_pct": 1.1,
+      "duration_ms": {
+        "avg": 1614.7,
+        "p95": 3942.8
+      },
+      "entry_points": [
+        {
+          "method": "loginOtpGenerate",
+          "count": 71
+        },
+        {
+          "method": "verifyRecaptcha",
+          "count": 8
+        },
+        {
+          "method": "saveLoginAuditDetails",
+          "count": 7
+        },
+        {
+          "method": "sendOTP",
+          "count": 2
+        },
+        {
+          "method": "saveCustomerSessionDetails",
+          "count": 1
+        }
+      ],
+      "exit_points": [
+        {
+          "method": "saveLoginAuditDetails",
+          "count": 63
+        },
+        {
+          "method": "saveLoginHistoryDetails",
+          "count": 17
+        },
+        {
+          "method": "verifyRecaptcha",
+          "count": 9
+        }
+      ],
+      "top_transitions": [
+        {
+          "from": "saveLoginAuditDetails",
+          "to": "saveLoginAuditDetails",
+          "count": 240
+        },
+        {
+          "from": "getPostResponseFromClientApi",
+          "to": "saveLoginAuditDetails",
+          "count": 124
+        },
+        {
+          "from": "saveLoginAuditDetails",
+          "to": "getAccessToken",
+          "count": 124
+        },
+        {
+          "from": "getAccessToken",
+          "to": "saveLoginAuditDetails",
+          "count": 124
+        },
+        {
+          "from": "saveCustomerSessionDetails",
+          "to": "saveLoginAuditDetails",
+          "count": 73
+        },
+        {
+          "from": "loginOtpGenerate",
+          "to": "verifyRecaptcha",
+          "count": 71
+        },
+        {
+          "from": "saveLoginAuditDetails",
+          "to": "getClientLoginResponse",
+          "count": 71
+        },
+        {
+          "from": "getClientLoginResponse",
+          "to": "login",
+          "count": 71
+        },
+        {
+          "from": "login",
+          "to": "getPostResponseFromClientApi",
+          "count": 71
+        },
+        {
+          "from": "verifyRecaptcha",
+          "to": "saveCustomerSessionDetails",
+          "count": 70
+        },
+        {
+          "from": "sendOtp",
+          "to": "getPostResponseFromClientApi",
+          "count": 53
+        },
+        {
+          "from": "saveLoginAuditDetails",
+          "to": "updateCustomerAccountLockStatus",
+          "count": 52
+        }
+      ],
+      "example_sequences": [
+        [
+          "loginOtpGenerate",
+          "verifyRecaptcha",
+          "saveCustomerSessionDetails",
+          "saveLoginAuditDetails",
+          "getClientLoginResponse",
+          "login",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "getClientSendOtpResponse",
+          "sendOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "updateCustomerAccountLockStatus",
+          "saveOtpTransactionDetails",
+          "getWhatsappOptStatus",
+          "saveLoginAuditDetails"
+        ],
+        [
+          "loginOtpGenerate",
+          "verifyRecaptcha",
+          "saveCustomerSessionDetails",
+          "saveLoginAuditDetails",
+          "getClientLoginResponse",
+          "login",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "getClientSendOtpResponse",
+          "sendOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "updateCustomerAccountLockStatus",
+          "saveOtpTransactionDetails",
+          "getWhatsappOptStatus",
+          "saveLoginAuditDetails"
+        ],
+        [
+          "loginOtpGenerate",
+          "verifyRecaptcha",
+          "saveCustomerSessionDetails",
+          "saveLoginAuditDetails",
+          "getClientLoginResponse",
+          "login",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "getClientSendOtpResponse",
+          "sendOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "updateCustomerAccountLockStatus",
+          "saveOtpTransactionDetails",
+          "getWhatsappOptStatus",
+          "saveLoginAuditDetails"
+        ]
+      ]
+    },
+    {
+      "journey_id": 4,
+      "label": "getCustomerSessionDetailsBySessionId + saveLoginAuditDetails",
+      "session_count": 35,
+      "share_of_traffic_pct": 6.7,
+      "sessions_with_errors": 2,
+      "error_rate_pct": 5.7,
+      "duration_ms": {
+        "avg": 7790.9,
+        "p95": 21335.0
+      },
+      "entry_points": [
+        {
+          "method": "getCustomerSessionDetailsBySessionId",
+          "count": 25
+        },
+        {
+          "method": "saveLoginAuditDetails",
+          "count": 10
+        }
+      ],
+      "exit_points": [
+        {
+          "method": "updateCustomerAccountLockStatus",
+          "count": 21
+        },
+        {
+          "method": "saveLoginAuditDetails",
+          "count": 11
+        },
+        {
+          "method": "getPolicyOrClientId",
+          "count": 2
+        },
+        {
+          "method": "getCustomerAccountLockStatusByClientId",
+          "count": 1
+        }
+      ],
+      "top_transitions": [
+        {
+          "from": "saveLoginAuditDetails",
+          "to": "saveLoginAuditDetails",
+          "count": 212
+        },
+        {
+          "from": "getCustomerSessionDetailsBySessionId",
+          "to": "contactDetailsOtp",
+          "count": 114
+        },
+        {
+          "from": "contactDetailsOtp",
+          "to": "getPolicyOrClientId",
+          "count": 114
+        },
+        {
+          "from": "getPolicyOrClientId",
+          "to": "getCustomerSessionDetailsBySessionId",
+          "count": 112
+        },
+        {
+          "from": "getCustomerDataByCustomerId",
+          "to": "sendOtpResponse",
+          "count": 111
+        },
+        {
+          "from": "sendOtpResponse",
+          "to": "sendOtp",
+          "count": 111
+        },
+        {
+          "from": "sendOtp",
+          "to": "getPostResponseFromClientApi",
+          "count": 111
+        },
+        {
+          "from": "getPostResponseFromClientApi",
+          "to": "saveLoginAuditDetails",
+          "count": 111
+        },
+        {
+          "from": "saveLoginAuditDetails",
+          "to": "getAccessToken",
+          "count": 111
+        },
+        {
+          "from": "getAccessToken",
+          "to": "saveLoginAuditDetails",
+          "count": 111
+        },
+        {
+          "from": "saveLoginAuditDetails",
+          "to": "updateCustomerAccountLockStatus",
+          "count": 110
+        },
+        {
+          "from": "getCustomerSessionDetailsBySessionId",
+          "to": "getCustomerDataByCustomerId",
+          "count": 108
+        }
+      ],
+      "example_sequences": [
+        [
+          "getCustomerSessionDetailsBySessionId",
+          "contactDetailsOtp",
+          "getPolicyOrClientId",
+          "getCustomerSessionDetailsBySessionId",
+          "getCustomerDataByCustomerId",
+          "sendOtpResponse",
+          "sendOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails"
+        ],
+        [
+          "saveLoginAuditDetails",
+          "updateCustomerAccountLockStatus",
+          "getCustomerSessionDetailsBySessionId",
+          "contactDetailsOtp",
+          "getPolicyOrClientId",
+          "getCustomerSessionDetailsBySessionId",
+          "getCustomerDataByCustomerId",
+          "sendOtpResponse",
+          "sendOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "updateCustomerAccountLockStatus",
+          "getCustomerSessionDetailsBySessionId",
+          "contactDetailsOtp",
+          "getPolicyOrClientId",
+          "getCustomerSessionDetailsBySessionId",
+          "getCustomerDataByCustomerId",
+          "sendOtpResponse",
+          "sendOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "updateCustomerAccountLockStatus",
+          "getCustomerSessionDetailsBySessionId",
+          "contactDetailsOtp",
+          "getPolicyOrClientId",
+          "getCustomerSessionDetailsBySessionId",
+          "getCustomerDataByCustomerId",
+          "sendOtpResponse",
+          "sendOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "updateCustomerAccountLockStatus",
+          "getCustomerSessionDetailsBySessionId",
+          "contactDetailsOtp",
+          "getPolicyOrClientId",
+          "getCustomerSessionDetailsBySessionId",
+          "getCustomerDataByCustomerId",
+          "sendOtpResponse",
+          "sendOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "updateCustomerAccountLockStatus",
+          "getCustomerSessionDetailsBySessionId",
+          "contactDetailsOtp",
+          "getPolicyOrClientId",
+          "getCustomerSessionDetailsBySessionId",
+          "getCustomerDataByCustomerId",
+          "sendOtpResponse",
+          "sendOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "updateCustomerAccountLockStatus",
+          "getCustomerSessionDetailsBySessionId",
+          "contactDetailsOtp",
+          "getPolicyOrClientId",
+          "getCustomerSessionDetailsBySessionId",
+          "getCustomerDataByCustomerId",
+          "sendOtpResponse",
+          "sendOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "updateCustomerAccountLockStatus",
+          "getCustomerSessionDetailsBySessionId",
+          "contactDetailsOtp",
+          "getPolicyOrClientId",
+          "getCustomerSessionDetailsBySessionId",
+          "getCustomerDataByCustomerId",
+          "sendOtpResponse",
+          "sendOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "updateCustomerAccountLockStatus",
+          "getCustomerSessionDetailsBySessionId",
+          "contactDetailsOtp",
+          "getPolicyOrClientId",
+          "getCustomerSessionDetailsBySessionId",
+          "getCustomerDataByCustomerId",
+          "sendOtpResponse",
+          "sendOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "updateCustomerAccountLockStatus",
+          "getCustomerSessionDetailsBySessionId",
+          "contactDetailsOtp",
+          "getPolicyOrClientId",
+          "getCustomerSessionDetailsBySessionId",
+          "getCustomerDataByCustomerId",
+          "sendOtpResponse",
+          "sendOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails",
+          "updateCustomerAccountLockStatus"
+        ],
+        [
+          "getCustomerSessionDetailsBySessionId",
+          "contactDetailsOtp",
+          "getPolicyOrClientId",
+          "getCustomerSessionDetailsBySessionId",
+          "getCustomerDataByCustomerId",
+          "sendOtpResponse",
+          "sendOtp",
+          "getPostResponseFromClientApi",
+          "saveLoginAuditDetails",
+          "getAccessToken",
+          "saveLoginAuditDetails",
+          "saveLoginAuditDetails"
+        ]
+      ]
+    },
+    {
+      "journey_id": 5,
+      "label": "saveLoginHistoryDetails + saveLoginAuditDetails",
+      "session_count": 17,
+      "share_of_traffic_pct": 3.3,
+      "sessions_with_errors": 2,
+      "error_rate_pct": 11.8,
+      "duration_ms": {
+        "avg": 121.6,
+        "p95": 365.6
+      },
+      "entry_points": [
+        {
+          "method": "saveLoginHistoryDetails",
+          "count": 15
+        },
+        {
+          "method": "saveLoginAuditDetails",
+          "count": 2
+        }
+      ],
+      "exit_points": [
+        {
+          "method": "saveLoginAuditDetails",
+          "count": 15
+        },
+        {
+          "method": "saveLoginHistoryDetails",
+          "count": 2
+        }
+      ],
+      "top_transitions": [
+        {
+          "from": "saveLoginHistoryDetails",
+          "to": "saveLoginAuditDetails",
+          "count": 15
+        },
+        {
+          "from": "saveLoginAuditDetails",
+          "to": "saveLoginHistoryDetails",
+          "count": 2
+        }
+      ],
+      "example_sequences": [
+        [
+          "saveLoginHistoryDetails",
+          "saveLoginAuditDetails"
+        ],
+        [
+          "saveLoginHistoryDetails",
+          "saveLoginAuditDetails"
+        ],
+        [
+          "saveLoginAuditDetails",
+          "saveLoginHistoryDetails"
+        ]
+      ]
+    },
+    {
+      "journey_id": 3,
+      "label": "getCustomerSessionDetailsBySessionId",
+      "session_count": 15,
+      "share_of_traffic_pct": 2.9,
+      "sessions_with_errors": 0,
+      "error_rate_pct": 0.0,
+      "duration_ms": {
+        "avg": 174.4,
+        "p95": 352.3
+      },
+      "entry_points": [
+        {
+          "method": "getCustomerSessionDetailsBySessionId",
+          "count": 15
+        }
+      ],
+      "exit_points": [
+        {
+          "method": "fetchAudioForAadhaar",
+          "count": 15
+        }
+      ],
+      "top_transitions": [
+        {
+          "from": "getCustomerSessionDetailsBySessionId",
+          "to": "fetchAudioForAadhaar",
+          "count": 15
+        }
+      ],
+      "example_sequences": [
+        [
+          "getCustomerSessionDetailsBySessionId",
+          "fetchAudioForAadhaar"
+        ],
+        [
+          "getCustomerSessionDetailsBySessionId",
+          "fetchAudioForAadhaar"
+        ],
+        [
+          "getCustomerSessionDetailsBySessionId",
+          "fetchAudioForAadhaar"
+        ]
+      ]
+    },
+    {
+      "journey_id": 7,
+      "label": "getCustomerSessionDetailsBySessionId",
+      "session_count": 10,
+      "share_of_traffic_pct": 1.9,
+      "sessions_with_errors": 0,
+      "error_rate_pct": 0.0,
+      "duration_ms": {
+        "avg": 17.1,
+        "p95": 74.6
+      },
+      "entry_points": [
+        {
+          "method": "getCustomerSessionDetailsBySessionId",
+          "count": 10
+        }
+      ],
+      "exit_points": [
+        {
+          "method": "invalidateCustomerSessionDetails",
+          "count": 10
+        }
+      ],
+      "top_transitions": [
+        {
+          "from": "getCustomerSessionDetailsBySessionId",
+          "to": "logout",
+          "count": 10
+        },
+        {
+          "from": "logout",
+          "to": "invalidateCustomerSessionDetails",
+          "count": 10
+        }
+      ],
+      "example_sequences": [
+        [
+          "getCustomerSessionDetailsBySessionId",
+          "logout",
+          "invalidateCustomerSessionDetails"
+        ],
+        [
+          "getCustomerSessionDetailsBySessionId",
+          "logout",
+          "invalidateCustomerSessionDetails"
+        ],
+        [
+          "getCustomerSessionDetailsBySessionId",
+          "logout",
+          "invalidateCustomerSessionDetails"
+        ]
+      ]
+    }
+  ]
+}

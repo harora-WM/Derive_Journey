@@ -397,3 +397,72 @@ with open("clusters.html", "w") as f:
     f.write(HTML)
 
 print(f"Saved clusters.html ({len(HTML)//1024} KB)")
+
+# ── Save structured JSON output ───────────────────────────────────────────────
+
+total_sessions = len(session_list)
+error_sessions = sum(1 for s in session_list if s["has_error"])
+
+journeys = []
+for cid in sorted(cluster_data.keys()):
+    cd   = cluster_data[cid]
+    n    = len(cd["sessions"])
+    errs = cd["errors"]
+    durs = cd["durations"]
+    exit_methods = Counter(s["methods"][-1] for s in cd["sessions"])
+    journeys.append({
+        "journey_id":           cid,
+        "label":                CLUSTER_LABELS[cid],
+        "session_count":        n,
+        "share_of_traffic_pct": round(n / total_sessions * 100, 1),
+        "sessions_with_errors": errs,
+        "error_rate_pct":       round(errs / n * 100, 1) if n else 0.0,
+        "duration_ms": {
+            "avg": round(float(np.mean(durs)), 1) if durs else 0.0,
+            "p95": round(float(np.percentile(durs, 95)), 1) if durs else 0.0,
+        },
+        "entry_points": [{"method": m, "count": c} for m, c in cd["entry_methods"].most_common(5)],
+        "exit_points":  [{"method": m, "count": c} for m, c in exit_methods.most_common(5)],
+        "top_transitions": [
+            {"from": s, "to": d, "count": c}
+            for (s, d), c in cd["transitions"].most_common(12)
+        ],
+        "example_sequences": [s["methods"] for s in cd["sessions"][:3]],
+    })
+
+# Most common journeys first — journey_id still identifies the cluster
+journeys.sort(key=lambda j: -j["session_count"])
+
+output = {
+    "description": (
+        "User journeys reconstructed from usermgmt service logs (PNB MetLife customer "
+        "portal). Log lines were grouped into per-request sessions by Tomcat thread ID "
+        "(split at a 5s idle gap), then clustered into journey types by the similarity "
+        "of their API method-call sequences (TF-IDF + KMeans)."
+    ),
+    "source_log_file": "azure_nonsimple.txt",
+    "field_guide": {
+        "journey_id":        "Cluster number; matches the badge/colour in clusters.html",
+        "label":             "Two most common entry methods of the journey, joined with ' + '",
+        "session_count":     "Number of request sessions assigned to this journey",
+        "share_of_traffic_pct": "session_count as a percentage of all sessions",
+        "sessions_with_errors": "Sessions containing at least one ERROR-level log line",
+        "duration_ms":       "Session wall-clock duration (first to last log line)",
+        "entry_points":      "Methods sessions start with, and how often",
+        "exit_points":       "Methods sessions end with, and how often",
+        "top_transitions":   "Most frequent consecutive method pairs within this journey",
+        "example_sequences": "Full method-call sequences of real sessions in this journey",
+    },
+    "summary": {
+        "total_sessions":        total_sessions,
+        "journey_types":         len(journeys),
+        "sessions_with_errors":  error_sessions,
+        "overall_error_rate_pct": round(error_sessions / total_sessions * 100, 1),
+        "avg_session_duration_ms": round(float(np.mean([s["duration"] for s in session_list])), 1),
+    },
+    "journeys": journeys,
+}
+
+with open("journeys.json", "w") as f:
+    json.dump(output, f, indent=2)
+print("Saved journeys.json")
